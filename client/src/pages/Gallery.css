@@ -1,61 +1,179 @@
-.gallery-section {
-  padding: 4rem 2rem;
-  background: #f5f5f5;
+.gallery-wrap {
+  padding: 104px 0;
 }
-
-.gallery-grid {
+.gallery-top {
+  align-items: end;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 43px;
+}
+.gallery-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.gallery-filters button {
+  background: transparent;
+  border: 1px solid #d8e1da;
+  border-radius: 99px;
+  color: #5c706d;
+  font-size: 0.76rem;
+  font-weight: 700;
+  padding: 8px 12px;
+}
+.gallery-filters button.selected {
+  background: #193738;
+  border-color: #193738;
+  color: #fff;
+}
+.gallery-grid-new {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.5rem;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 17px;
 }
-
-.gallery-item {
-  position: relative;
-  height: 250px;
-  border-radius: 8px;
+.project-card {
+  background: #f2f5f1;
+  border: 0;
+  color: #193738;
+  min-height: 315px;
   overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  padding: 0;
+  position: relative;
+  text-align: left;
 }
-
-.gallery-item img {
-  width: 100%;
+.project-card img {
   height: 100%;
   object-fit: cover;
-  transition: transform 0.3s;
-}
-
-.gallery-item:hover img {
-  transform: scale(1.1);
-}
-
-.gallery-overlay {
   position: absolute;
-  bottom: 0;
+  transition: transform 0.55s;
+  width: 100%;
   left: 0;
+  top: 0;
+}
+.project-card:hover img {
+  transform: scale(1.07);
+}
+.project-card:after {
+  background: linear-gradient(transparent 35%, rgba(12, 33, 33, 0.76));
+  bottom: 0;
+  content: "";
+  left: 0;
+  position: absolute;
   right: 0;
-  background: linear-gradient(to top, rgba(0, 0, 0, 0.8), transparent);
-  color: white;
-  padding: 2rem 1rem 1rem 1rem;
-  transform: translateY(100%);
-  transition: transform 0.3s;
+  top: 0;
 }
-
-.gallery-item:hover .gallery-overlay {
-  transform: translateY(0);
+.project-card > div {
+  bottom: 0;
+  color: #fff;
+  left: 0;
+  padding: 22px;
+  position: absolute;
+  z-index: 1;
 }
-
-.gallery-overlay p {
-  margin: 0;
-  font-weight: 600;
+.project-card h3 {
+  font:
+    700 1.4rem "Playfair Display",
+    serif;
+  margin: 0 0 5px;
 }
-
-@media (max-width: 768px) {
-  .gallery-grid {
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+.project-card b {
+  color: #f5c17a;
+  font-size: 0.72rem;
+}
+.project-category {
+  background: #fffdf9;
+  color: #193738;
+  font-size: 0.67rem;
+  font-weight: 700;
+  left: 14px;
+  padding: 7px 10px;
+  position: absolute;
+  top: 14px;
+  z-index: 1;
+}
+.project-0 {
+  grid-column: span 2;
+}
+.project-0,
+.project-3 {
+  min-height: 400px;
+}
+.project-modal {
+  align-items: center;
+  background: rgba(18, 35, 35, 0.8);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  padding: 20px;
+  position: fixed;
+  z-index: 50;
+}
+.project-modal > div {
+  background: #fffdf9;
+  max-width: 710px;
+  padding: 14px;
+  position: relative;
+  width: 100%;
+}
+.project-modal img {
+  display: block;
+  max-height: 70vh;
+  object-fit: cover;
+  width: 100%;
+}
+.project-modal p {
+  color: #dc6b42;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  margin: 15px 0 5px;
+  text-transform: uppercase;
+}
+.project-modal h2 {
+  font:
+    700 1.7rem "Playfair Display",
+    serif;
+  margin: 0 0 8px;
+}
+.modal-close {
+  background: #193738;
+  border: 0;
+  border-radius: 50%;
+  color: #fff;
+  font-size: 1.4rem;
+  height: 34px;
+  line-height: 1;
+  position: absolute;
+  right: 25px;
+  top: 25px;
+  width: 34px;
+  z-index: 1;
+}
+@media (max-width: 700px) {
+  .gallery-wrap {
+    padding: 75px 0;
   }
-
-  .gallery-item {
-    height: 200px;
+  .gallery-top {
+    align-items: start;
+    flex-direction: column;
+    gap: 18px;
+  }
+  .gallery-grid-new {
+    grid-template-columns: 1fr 1fr;
+  }
+  .project-0 {
+    grid-column: span 2;
+  }
+  .project-0,
+  .project-3 {
+    min-height: 315px;
+  }
+}
+@media (max-width: 440px) {
+  .gallery-grid-new {
+    grid-template-columns: 1fr;
+  }
+  .project-0 {
+    grid-column: auto;
   }
 }

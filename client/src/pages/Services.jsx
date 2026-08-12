@@ -1,73 +1,97 @@
-import './Services.css';
-
+import { Link } from "react-router-dom";
+import "./Services.css";
+const services = [
+  [
+    "Interior painting",
+    "Fresh, refined interiors that work beautifully with your natural light and furniture.",
+    "https://digipaces.com/storage/Osian-Almanova-Internal-Living-Room.jpg",
+  ],
+  [
+    "Exterior painting",
+    "Protective, weather-ready colour that gives your home instant kerb appeal.",
+    "https://www.drishtiarchitects.com/wp-content/uploads/2020/11/6065-Bungalow_View015-min-758x520.jpg",
+  ],
+  [
+    "Textures & effects",
+    "Subtle layers, feature walls and designer finishes with real depth.",
+    "https://assets.architecturaldigest.in/photos/6008438733ca0d53ee20781a/master/w_1600%2Cc_limit/Pune-home-interior-design-2-2.jpg",
+  ],
+  [
+    "Waterproofing",
+    "Smart moisture protection that keeps paintwork looking beautiful for longer.",
+    "https://images.homify.com/v1457602607/p/photo/image/1392328/Raj_Bhansali_resi_03.jpg",
+  ],
+  [
+    "Repainting & renovation",
+    "A careful reset for well-loved homes, handled from preparation to polish.",
+    "https://www.buildofy.com/blog/content/images/2025/10/DSCF7176-HDR.jpg",
+  ],
+  [
+    "Commercial spaces",
+    "Professional, low-disruption painting for offices, studios and retail spaces.",
+    "https://taoarchitecture.com/img/corporate/pbap-credai-office/pbap-credai-office-bg.jpg",
+  ],
+];
 export default function Services() {
-  const services = [
-    {
-      id: 1,
-      title: 'Interior Painting',
-      description: 'Transform your interior spaces with premium quality paints and expert finishing.',
-      icon: '🏠',
-      image: 'https://via.placeholder.com/300x200?text=Interior+Painting'
-    },
-    {
-      id: 2,
-      title: 'Exterior Painting',
-      description: 'Enhance your home exterior with weather-resistant, durable paint solutions.',
-      icon: '🏘️',
-      image: 'https://via.placeholder.com/300x200?text=Exterior+Painting'
-    },
-    {
-      id: 3,
-      title: 'Wall Texture',
-      description: 'Add depth and character to your walls with decorative texture finishes.',
-      icon: '🎨',
-      image: 'https://via.placeholder.com/300x200?text=Wall+Texture'
-    },
-    {
-      id: 4,
-      title: 'Waterproofing',
-      description: 'Protect your walls from moisture and weather with advanced waterproofing solutions.',
-      icon: '💧',
-      image: 'https://via.placeholder.com/300x200?text=Waterproofing'
-    },
-    {
-      id: 5,
-      title: 'House Renovation Paint',
-      description: 'Complete painting solutions for your entire home renovation project.',
-      icon: '🔨',
-      image: 'https://via.placeholder.com/300x200?text=Renovation+Paint'
-    },
-    {
-      id: 6,
-      title: 'Commercial Painting',
-      description: 'Professional painting services for offices, stores, and commercial buildings.',
-      icon: '🏢',
-      image: 'https://via.placeholder.com/300x200?text=Commercial+Painting'
-    }
-  ];
-
   return (
-    <main className="services-page">
-      <section className="page-header">
-        <h1>Our Services</h1>
-        <p>Professional painting solutions for every need</p>
-      </section>
-
-      <section className="services-container">
+    <main>
+      <section className="page-hero">
         <div className="container">
-          <div className="services-grid">
-            {services.map(service => (
-              <div key={service.id} className="service-card">
-                <div className="service-image">
-                  <img src={service.image} alt={service.title} />
+          <p className="eyebrow">Our craft</p>
+          <h1>
+            Painting with
+            <br />
+            purpose.
+          </h1>
+          <p>Practical expertise, beautiful finishes, no loose ends.</p>
+        </div>
+      </section>
+      <section className="services-list">
+        <div className="container">
+          <div className="services-intro">
+            <div>
+              <p className="eyebrow">Made for every space</p>
+              <h2 className="section-heading">
+                The right finish
+                <br />
+                for the way you live.
+              </h2>
+            </div>
+            <p className="section-copy">
+              Whether you're refreshing one room or reimagining an entire
+              property, we tailor our approach, materials and schedule to you.
+            </p>
+          </div>
+          <div className="service-list-grid">
+            {services.map((s, i) => (
+              <article className="service-full-card" key={s[0]}>
+                <div className="service-photo">
+                  <img src={s[2]} alt={s[0]} />
+                  <span>0{i + 1}</span>
                 </div>
-                <div className="service-icon">{service.icon}</div>
-                <h3>{service.title}</h3>
-                <p>{service.description}</p>
-                <a href="/contact" className="service-link">Learn More →</a>
-              </div>
+                <div>
+                  <h3>{s[0]}</h3>
+                  <p>{s[1]}</p>
+                  <Link to="/contact">
+                    Ask for a quote <b>→</b>
+                  </Link>
+                </div>
+              </article>
             ))}
           </div>
+        </div>
+      </section>
+      <section className="service-banner">
+        <div className="container">
+          <p className="eyebrow">Not sure where to begin?</p>
+          <h2>
+            We'll help you find
+            <br />
+            your perfect colour.
+          </h2>
+          <Link to="/contact" className="btn btn-light">
+            Book a free consultation <b>→</b>
+          </Link>
         </div>
       </section>
     </main>

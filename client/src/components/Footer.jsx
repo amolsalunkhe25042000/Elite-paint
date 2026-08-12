@@ -1,54 +1,46 @@
-import { Link } from 'react-router-dom';
-import './Footer.css';
-
+import { Link } from "react-router-dom";
+import "./Footer.css";
 export default function Footer() {
-  const currentYear = new Date().getFullYear();
-
   return (
     <footer className="footer">
       <div className="footer-container">
-        <div className="footer-content">
-          <div className="footer-section">
-            <h3>Elite Home Paint</h3>
-            <p>Professional home painting services</p>
-            <a href={`tel:9356535803`} className="footer-phone">
-              📞 9356535803
-            </a>
+        <div className="footer-top">
+          <div>
+            <Link className="footer-brand" to="/">
+              Elite<span>Paint</span>
+            </Link>
+            <p>
+              Thoughtful colour. Impeccable finish.
+              <br />
+              Homes made to feel like yours.
+            </p>
           </div>
-
-          <div className="footer-section">
-            <h4>Quick Links</h4>
-            <Link to="/">Home</Link>
-            <Link to="/about">About Us</Link>
+          <div>
+            <h4>Explore</h4>
+            <Link to="/about">Our story</Link>
             <Link to="/services">Services</Link>
-            <Link to="/gallery">Gallery</Link>
+            <Link to="/gallery">Recent work</Link>
           </div>
-
-          <div className="footer-section">
-            <h4>Services</h4>
-            <Link to="/services">Interior Painting</Link>
-            <Link to="/services">Exterior Painting</Link>
-            <Link to="/services">Wall Texture</Link>
-            <Link to="/services">Waterproofing</Link>
-          </div>
-
-          <div className="footer-section">
-            <h4>Contact</h4>
-            <p>Phone: <a href="tel:9356535803">9356535803</a></p>
-            <p>Founder: Amol Salunkhe</p>
-            <a 
-              href="https://wa.me/919356535803" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="whatsapp-link"
+          <div>
+            <h4>Get in touch</h4>
+            <a href="tel:9356535803">+91 93565 35803</a>
+            <a
+              href="https://wa.me/919356535803"
+              target="_blank"
+              rel="noreferrer"
             >
-              WhatsApp Us
+              WhatsApp us
             </a>
+            <Link to="/contact">Request a quote</Link>
+          </div>
+          <div className="footer-note">
+            <span>Mon – Sat</span>
+            <strong>9:00 AM – 7:00 PM</strong>
+            <span>At your service, wherever colour calls.</span>
           </div>
         </div>
-
         <div className="footer-bottom">
-          <p>&copy; {currentYear} Elite Home Paint. All rights reserved. | Founded by Amol Salunkhe</p>
+          © {new Date().getFullYear()} Elite Paint · Crafted with care
         </div>
       </div>
     </footer>

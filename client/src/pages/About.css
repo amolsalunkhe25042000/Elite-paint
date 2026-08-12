@@ -1,128 +1,197 @@
-.about-section {
-  padding: 4rem 2rem;
-  background: white;
+.about-story {
+  padding: 110px 0;
 }
-
-.about-content {
+.story-grid {
+  align-items: center;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3rem;
-  margin-bottom: 3rem;
-  align-items: start;
+  gap: 100px;
 }
-
-.about-text h2 {
-  color: #0066cc;
-  font-size: 2rem;
-  margin-bottom: 1rem;
+.story-image {
+  height: 500px;
+  position: relative;
 }
-
-.about-text h3 {
-  color: #0066cc;
-  margin: 2rem 0 1rem 0;
+.story-image img {
+  height: 100%;
+  object-fit: cover;
+  width: 100%;
 }
-
-.about-text p {
-  color: #666;
-  line-height: 1.8;
-  margin-bottom: 1rem;
+.story-image span {
+  background: #f4c37b;
+  bottom: -25px;
+  color: #193738;
+  font-size: 0.75rem;
+  left: -26px;
+  line-height: 1.25;
+  padding: 18px;
+  position: absolute;
 }
-
-.features-list {
-  list-style: none;
-  padding: 0;
+.story-image b {
+  font:
+    700 2rem "Playfair Display",
+    serif;
+}
+.story-grid .btn {
+  margin-top: 24px;
+}
+.local-spaces {
+  padding: 0 0 110px;
+}
+.local-spaces > .container > div:first-child {
+  display: inline-block;
+  vertical-align: top;
+  width: 50%;
+}
+.local-spaces > .container > .section-copy {
+  display: inline-block;
+  margin: 0 0 40px;
+  vertical-align: top;
+  width: 49%;
+}
+.local-spaces-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.local-spaces figure {
+  height: 300px;
   margin: 0;
+  overflow: hidden;
+  position: relative;
 }
-
-.features-list li {
-  color: #666;
-  padding: 0.5rem 0;
-  line-height: 1.6;
+.local-spaces img {
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s;
+  width: 100%;
 }
-
-.about-founder {
-  display: flex;
-  justify-content: center;
+.local-spaces figure:hover img {
+  transform: scale(1.05);
 }
-
-.founder-card {
-  background: #f5f5f5;
-  padding: 2rem;
-  border-radius: 10px;
-  text-align: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+.local-spaces figcaption {
+  background: #fffdf9;
+  bottom: 0;
+  color: #193738;
+  font:
+    700 1rem "Playfair Display",
+    serif;
+  left: 0;
+  padding: 11px 13px;
+  position: absolute;
 }
-
-.founder-avatar {
-  font-size: 4rem;
-  margin-bottom: 1rem;
+.local-spaces figcaption span {
+  color: #dc6b42;
+  margin-right: 9px;
 }
-
-.founder-card h3 {
-  color: #0066cc;
-  margin: 0;
-  font-size: 1.5rem;
+.about-values {
+  background: #f2f5f1;
+  padding: 105px 0;
 }
-
-.founder-title {
-  color: #ff6600;
-  font-weight: 600;
-  margin: 0.5rem 0 1rem 0;
-}
-
-.founder-bio {
-  color: #666;
-  line-height: 1.6;
-  margin: 0;
-}
-
-.values-section {
-  margin-top: 3rem;
-}
-
-.values-section h2 {
-  color: #0066cc;
-  text-align: center;
-  font-size: 2rem;
-  margin-bottom: 2rem;
-}
-
 .values-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 0;
+  margin-top: 42px;
 }
-
-.value-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 8px;
+.values-grid article {
+  border-left: 1px solid #d9e2db;
+  padding: 12px 28px 15px;
+}
+.values-grid article:first-child {
+  border: 0;
+  padding-left: 0;
+}
+.values-grid span {
+  color: #dc6b42;
+  font-size: 0.78rem;
+  font-weight: 700;
+}
+.values-grid h3 {
+  color: #193738;
+  font:
+    700 1.35rem "Playfair Display",
+    serif;
+  margin: 34px 0 10px;
+}
+.values-grid p {
+  color: #687977;
+  font-size: 0.92rem;
+  line-height: 1.65;
+}
+.about-quote {
+  background: #193738;
+  color: #fff;
+  padding: 100px 0;
   text-align: center;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  transition: transform 0.3s;
 }
-
-.value-card:hover {
-  transform: translateY(-5px);
+.about-quote .container {
+  max-width: 800px;
 }
-
-.value-icon {
-  font-size: 2.5rem;
-  margin-bottom: 1rem;
+.about-quote span {
+  color: #f3bd74;
+  font:
+    700 5rem/0 "Playfair Display",
+    serif;
 }
-
-.value-card h3 {
-  color: #0066cc;
-  margin: 0 0 0.5rem 0;
+.about-quote blockquote {
+  font:
+    700 clamp(1.8rem, 4vw, 3rem) / 1.25 "Playfair Display",
+    serif;
+  margin: 10px 0 24px;
 }
-
-.value-card p {
-  color: #666;
-  margin: 0;
+.about-quote p {
+  color: #f3bd74;
+  font-size: 0.67rem;
+  font-weight: 700;
+  letter-spacing: 0.13em;
 }
-
-@media (max-width: 768px) {
-  .about-content {
+@media (max-width: 760px) {
+  .about-story,
+  .about-values {
+    padding: 75px 0;
+  }
+  .story-grid {
     grid-template-columns: 1fr;
+    gap: 62px;
+  }
+  .story-image {
+    height: 400px;
+  }
+  .local-spaces {
+    padding: 0 0 75px;
+  }
+  .local-spaces > .container > div:first-child,
+  .local-spaces > .container > .section-copy {
+    display: block;
+    width: auto;
+  }
+  .local-spaces-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .local-spaces figure:last-child {
+    grid-column: span 2;
+  }
+  .values-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .values-grid article {
+    border-top: 1px solid #d9e2db;
+    padding: 22px;
+  }
+  .values-grid article:first-child {
+    padding: 22px;
+    border-top: 1px solid #d9e2db;
+  }
+}
+@media (max-width: 430px) {
+  .local-spaces-grid,
+  .values-grid {
+    grid-template-columns: 1fr;
+  }
+  .local-spaces figure:last-child {
+    grid-column: auto;
+  }
+  .values-grid article {
+    border-left: 0;
   }
 }

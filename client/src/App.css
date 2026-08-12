@@ -5,7 +5,7 @@
 }
 
 body {
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
   color: #333;
   background: white;
 }
@@ -16,4 +16,70 @@ html {
 
 main {
   min-height: 80vh;
+}
+
+.page-loader {
+  align-items: center;
+  background: rgba(255, 253, 249, 0.97);
+  display: flex;
+  inset: 0;
+  justify-content: center;
+  position: fixed;
+  z-index: 1000;
+}
+
+.loader-content {
+  text-align: center;
+}
+
+.loader-ring {
+  align-items: center;
+  animation: loader-spin 1.15s linear infinite;
+  border: 3px solid #d9e6de;
+  border-radius: 50%;
+  border-top-color: #df7048;
+  display: flex;
+  height: 68px;
+  justify-content: center;
+  margin: 0 auto 15px;
+  position: relative;
+  width: 68px;
+}
+
+.loader-ring::after {
+  border: 2px solid #f2bd74;
+  border-radius: 50%;
+  content: "";
+  height: 52px;
+  position: absolute;
+  width: 52px;
+}
+.loader-ring span {
+  color: #193738;
+  font:
+    700 1.5rem "Playfair Display",
+    serif;
+  position: relative;
+  z-index: 1;
+}
+.loader-content p {
+  color: #193738;
+  font-size: 0.74rem;
+  font-weight: 700;
+  letter-spacing: 0.19em;
+  margin: 0 0 5px;
+}
+.loader-content p b {
+  color: #df7048;
+}
+.loader-content small {
+  color: #73847f;
+  font-size: 0.67rem;
+  letter-spacing: 0.06em;
+}
+
+@keyframes loader-spin {
+  to {
+    transform: rotate(360deg);
+  }
 }

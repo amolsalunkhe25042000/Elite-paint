@@ -1,81 +1,141 @@
-import './About.css';
+import { Link } from "react-router-dom";
+import "./About.css";
+
+const spaces = [
+  [
+    "Apartment interiors",
+    "https://i.pinimg.com/originals/30/e8/44/30e8442a5c68d65cfba87fe9eb34bce1.jpg",
+    "Pune apartment living room interior",
+  ],
+  [
+    "Bungalow exteriors",
+    "https://www.s2astudio.in/assets/img/album-single/big/bungalow-viman-nagar-02.jpg",
+    "Bungalow exterior in Viman Nagar Pune",
+  ],
+  [
+    "Signature spaces",
+    "https://www.e-architect.com/wp-content/uploads/2018/02/wanzare-bugalow-s130218-11.jpg",
+    "Wanzare bungalow interior in Pune",
+  ],
+];
 
 export default function About() {
   return (
     <main>
-      <section className="page-header">
-        <h1>About Us</h1>
-        <p>Learn about Elite Home Paint</p>
-      </section>
-
-      <section className="about-section">
+      <section className="page-hero">
         <div className="container">
-          <div className="about-content">
-            <div className="about-text">
-              <h2>Elite Home Paint</h2>
-              <p>
-                Elite Home Paint is a professional home painting service dedicated to transforming homes 
-                with quality work and exceptional customer service. Founded by Amol Salunkhe, we bring 
-                years of expertise and passion for creating beautiful living spaces.
-              </p>
-              
-              <h3>Our Mission</h3>
-              <p>
-                To provide professional, affordable, and reliable painting services that exceed customer 
-                expectations and transform properties into beautiful spaces.
-              </p>
-
-              <h3>Why Choose Elite Home Paint?</h3>
-              <ul className="features-list">
-                <li>✓ Professional and experienced painters</li>
-                <li>✓ Premium quality paints and materials</li>
-                <li>✓ 100% customer satisfaction guarantee</li>
-                <li>✓ Free quotes and transparent pricing</li>
-                <li>✓ Quick turnaround times</li>
-                <li>✓ Neat and clean work environment</li>
-                <li>✓ Warranty on all services</li>
-                <li>✓ 24/7 customer support</li>
-              </ul>
-            </div>
-
-            <div className="about-founder">
-              <div className="founder-card">
-                <div className="founder-avatar">👨‍💼</div>
-                <h3>Amol Salunkhe</h3>
-                <p className="founder-title">Founder & Owner</p>
-                <p className="founder-bio">
-                  With years of industry experience, Amol is committed to delivering excellence in every project. 
-                  His dedication to quality and customer satisfaction is the foundation of Elite Home Paint.
-                </p>
-              </div>
-            </div>
+          <p className="eyebrow">The people behind the paint</p>
+          <h1>
+            Built on care,
+            <br />
+            made for home.
+          </h1>
+          <p>We believe a great finish starts with listening.</p>
+        </div>
+      </section>
+      <section className="about-story">
+        <div className="container story-grid">
+          <div className="story-image">
+            <img
+              src="https://images.homify.com/v1457603643/p/photo/image/1392415/9.jpg"
+              alt="Modern private residence in Sopan Baug, Pune"
+            />
+            <span>
+              Since
+              <br />
+              <b>2017</b>
+            </span>
           </div>
-
-          <section className="values-section">
-            <h2>Our Core Values</h2>
-            <div className="values-grid">
-              <div className="value-card">
-                <div className="value-icon">🎯</div>
-                <h3>Quality</h3>
-                <p>We never compromise on the quality of our work</p>
-              </div>
-              <div className="value-card">
-                <div className="value-icon">🤝</div>
-                <h3>Integrity</h3>
-                <p>Honest communication and transparent pricing</p>
-              </div>
-              <div className="value-card">
-                <div className="value-icon">⏰</div>
-                <h3>Reliability</h3>
-                <p>We meet deadlines and keep our commitments</p>
-              </div>
-              <div className="value-card">
-                <div className="value-icon">😊</div>
-                <h3>Customer Focus</h3>
-                <p>Your satisfaction is our top priority</p>
-              </div>
-            </div>
-          </section>
+          <div>
+            <p className="eyebrow">A better way to paint</p>
+            <h2 className="section-heading">
+              Your space deserves more than a quick coat.
+            </h2>
+            <p className="section-copy">
+              Elite Paint brings skilled craftsmanship and a considered eye to
+              every project. From first colour conversation to the final
+              clean-up, we make the process simple, precise, and genuinely
+              enjoyable.
+            </p>
+            <p className="section-copy">
+              Founded by Amol Salunkhe, our team has earned the trust of
+              homeowners through honest advice, tidy workspaces and finishes
+              that last.
+            </p>
+            <Link to="/contact" className="btn btn-primary">
+              Tell us about your space <b>-&gt;</b>
+            </Link>
+          </div>
+        </div>
+      </section>
+      <section className="local-spaces">
+        <div className="container">
+          <div>
+            <p className="eyebrow">Homes we understand</p>
+            <h2 className="section-heading">Made for Pune living.</h2>
+          </div>
+          <p className="section-copy">
+            From a sunlit apartment in Baner to a family bungalow in Koregaon
+            Park, we select finishes that suit the way Maharashtra homes are
+            built and lived in.
+          </p>
+          <div className="local-spaces-grid">
+            {spaces.map(([label, image, alt], index) => (
+              <figure key={label}>
+                <img src={image} alt={alt} />
+                <figcaption>
+                  <span>0{index + 1}</span>
+                  {label}
+                </figcaption>
+              </figure>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="about-values">
+        <div className="container">
+          <p className="eyebrow">How we work</p>
+          <h2 className="section-heading">The details make the difference.</h2>
+          <div className="values-grid">
+            {[
+              [
+                "01",
+                "Listen first",
+                "We start with your vision, light, lifestyle and budget.",
+              ],
+              [
+                "02",
+                "Prepare properly",
+                "Careful surface prep is our quiet secret to a lasting finish.",
+              ],
+              [
+                "03",
+                "Paint beautifully",
+                "Experienced hands, premium materials and an exacting eye.",
+              ],
+              [
+                "04",
+                "Leave it lovely",
+                "A final walkthrough and a clean space ready to enjoy.",
+              ],
+            ].map((v) => (
+              <article key={v[0]}>
+                <span>{v[0]}</span>
+                <h3>{v[1]}</h3>
+                <p>{v[2]}</p>
+              </article>
+            ))}
+          </div>
+        </div>
+      </section>
+      <section className="about-quote">
+        <div className="container">
+          <span>&ldquo;</span>
+          <blockquote>
+            We don't simply paint walls. We help create the feeling you want to
+            come home to.
+          </blockquote>
+          <p>AMOL SALUNKHE &middot; FOUNDER, ELITE PAINT</p>
         </div>
       </section>
     </main>
