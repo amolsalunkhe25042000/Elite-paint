@@ -1,10 +1,10 @@
 import {
-  BrowserRouter as Router,
+  HashRouter as Router,
   Routes,
   Route,
   useLocation,
 } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
@@ -24,43 +24,10 @@ function ScrollToTop() {
   return null;
 }
 
-function PageLoader() {
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    const timer = window.setTimeout(() => setLoading(false), 2000);
-    return () => window.clearTimeout(timer);
-  }, []);
-
-  if (!loading) return null;
-
-  return (
-    <div
-      className="page-loader"
-      role="status"
-      aria-live="polite"
-      aria-label="Loading page"
-    >
-      <div className="loader-content">
-        <div className="loader-ring">
-          <span>E</span>
-        </div>
-        <p>
-          ELITE <b>PAINT</b>
-        </p>
-        <small>Preparing your space</small>
-      </div>
-    </div>
-  );
-}
-
 function AppContent() {
-  const { pathname } = useLocation();
-
   return (
     <>
       <ScrollToTop />
-      <PageLoader key={pathname} />
       <Header />
       <Routes>
         <Route path="/" element={<Home />} />
@@ -68,6 +35,7 @@ function AppContent() {
         <Route path="/services" element={<Services />} />
         <Route path="/gallery" element={<Gallery />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="*" element={<Home />} />
       </Routes>
       <Footer />
     </>

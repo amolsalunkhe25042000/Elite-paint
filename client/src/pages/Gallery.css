@@ -108,6 +108,9 @@
   position: fixed;
   z-index: 50;
 }
+body.modal-is-open {
+  overflow: hidden;
+}
 .project-modal > div {
   background: #fffdf9;
   max-width: 710px;

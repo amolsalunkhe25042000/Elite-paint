@@ -4,17 +4,17 @@ import "./About.css";
 const spaces = [
   [
     "Apartment interiors",
-    "https://i.pinimg.com/originals/30/e8/44/30e8442a5c68d65cfba87fe9eb34bce1.jpg",
+    "/images/about-apartment.jpg",
     "Pune apartment living room interior",
   ],
   [
     "Bungalow exteriors",
-    "https://www.s2astudio.in/assets/img/album-single/big/bungalow-viman-nagar-02.jpg",
+    "/images/about-bungalow.jpg",
     "Bungalow exterior in Viman Nagar Pune",
   ],
   [
     "Signature spaces",
-    "https://www.e-architect.com/wp-content/uploads/2018/02/wanzare-bugalow-s130218-11.jpg",
+    "/images/about-signature.jpg",
     "Wanzare bungalow interior in Pune",
   ],
 ];
@@ -37,7 +37,7 @@ export default function About() {
         <div className="container story-grid">
           <div className="story-image">
             <img
-              src="https://images.homify.com/v1457603643/p/photo/image/1392415/9.jpg"
+              src="/images/about-story.jpg"
               alt="Modern private residence in Sopan Baug, Pune"
             />
             <span>
