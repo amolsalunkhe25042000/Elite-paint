@@ -1004,8 +1004,6 @@
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
-
-/* Desktop (1200px+) - Full 3-column layout */
 @media (max-width: 1200px) {
   .admin-work {
     grid-template-columns: 160px 1fr;
@@ -1020,7 +1018,6 @@
   }
 }
 
-/* Tablet Large (1000px - 1199px) */
 @media (max-width: 1000px) {
   .admin-work {
     grid-template-columns: 160px 1fr;
@@ -1043,44 +1040,23 @@
   .milestone-note {
     grid-column: span 2;
   }
-
-  .admin-top h1 {
-    font-size: 2rem;
-  }
-
-  .form-columns {
-    grid-template-columns: 1fr;
-  }
-
-  .item-numbers {
-    grid-template-columns: 1fr 1fr;
-  }
 }
 
-/* Tablet (769px - 999px) */
-@media (max-width: 999px) {
+@media (max-width: 768px) {
   .admin-work {
     display: block;
     padding-top: 30px;
-    gap: 16px;
   }
 
   .document-sidebar {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 1fr 1fr;
     gap: 12px;
     margin-bottom: 24px;
-    position: static;
-    top: auto;
-  }
-
-  .document-sidebar button {
-    padding: 12px 10px;
-    font-size: 0.85rem;
   }
 
   .milestone-note {
-    grid-column: span 3;
+    grid-column: span 2;
   }
 
   .document-editor {
@@ -1090,7 +1066,6 @@
   .editor-heading {
     flex-direction: column;
     align-items: flex-start;
-    gap: 12px;
   }
 
   .doc-number {
@@ -1109,8 +1084,51 @@
     position: static;
     margin-top: 28px;
     padding: 20px;
-    min-height: auto;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  }
+
+  .action-buttons {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .login-card {
+    padding: 28px 20px;
+  }
+
+  .admin-top {
+    padding: 35px 0;
+  }
+
+  .admin-top h1 {
+    font-size: 1.8rem;
+  }
+
+  .document-editor {
+    padding: 16px;
+  }
+
+  .editor-heading {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .stage-picker {
+    padding: 12px;
+    gap: 8px;
+  }
+
+  .item-numbers {
+    grid-template-columns: 1fr;
+  }
+
+  .item-card {
+    padding: 16px;
+  }
+
+  .document-preview {
+    padding: 16px;
   }
 
   .preview-meta {
@@ -1118,223 +1136,50 @@
     gap: 20px;
   }
 
-  .preview-items > div:first-child {
-    grid-template-columns: 1.5fr 0.5fr 0.5fr !important;
-    font-size: 0.75rem;
+  .preview-header {
+    flex-direction: column;
   }
 
-  .preview-items > div:not(:first-child) {
-    grid-template-columns: 1.5fr 0.5fr 0.5fr !important;
+  .btn {
+    width: 100%;
   }
 
   .action-buttons {
     grid-template-columns: 1fr;
   }
-
-  .login-card {
-    max-width: 90%;
-    padding: 32px 20px;
-  }
-
-  .admin-top {
-    padding: 40px 0;
-  }
-
-  .admin-top h1 {
-    font-size: 2.2rem;
-  }
 }
-
-/* Mobile (640px - 768px) */
-@media (max-width: 768px) {
-  .admin-work {
-    display: block;
-    padding-top: 20px;
-    gap: 12px;
-  }
-
-  .document-sidebar {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
-    margin-bottom: 20px;
-    position: static;
-    top: auto;
-  }
-
-  .document-sidebar button {
-    padding: 10px 8px;
-    font-size: 0.8rem;
-  }
-
-  .milestone-note {
-    grid-column: span 2;
-    padding: 10px;
-    font-size: 0.7rem;
-  }
-
-  .document-editor {
-    padding: 16px;
-    background: #fff;
-  }
-
-  .editor-heading {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    margin-bottom: 16px;
-    padding-bottom: 16px;
-  }
-
-  .editor-heading h2 {
-    font-size: 1.4rem;
-  }
-
-  .doc-number {
-    align-self: flex-start;
-    font-size: 0.8rem;
-    padding: 6px 10px;
-  }
-
-  .form-section {
-    padding: 16px;
-    margin-bottom: 12px;
-  }
-
-  .form-columns {
-    grid-template-columns: 1fr;
-    gap: 12px;
-  }
-
-  .item-numbers {
-    grid-template-columns: 1fr;
-    gap: 10px;
-  }
-
-  .item-card {
-    padding: 12px;
-  }
-
-  .item-card-top {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 8px;
-  }
-
-  .item-rate-display {
-    align-self: flex-start;
-    margin-left: 0;
-  }
-
-  .document-preview {
-    position: static;
-    margin-top: 16px;
-    padding: 16px;
-    min-height: auto;
-    border: 1px solid #d7e0da;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-  }
-
-  .document-preview header {
-    flex-direction: column;
-    gap: 12px;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-  }
-
-  .document-preview header > div:last-child {
-    text-align: left;
-  }
-
-  .preview-brand {
-    font-size: 1.1rem;
-    gap: 8px;
-  }
-
-  .preview-brand b {
-    font-size: 1rem;
-  }
-
-  .preview-meta {
-    grid-template-columns: 1fr;
-    gap: 16px;
-    margin-bottom: 16px;
-  }
-
-  .preview-meta > div span {
-    font-size: 0.7rem;
-    margin-bottom: 2px;
-  }
-
-  .preview-meta strong {
-    font-size: 0.9rem;
-    margin-bottom: 4px;
-  }
-
-  .preview-meta p {
-    font-size: 0.8rem;
-    line-height: 1.5;
-  }
-
-  .preview-items > div:first-child {
-    grid-template-columns: 1.5fr 0.5fr 0.5fr !important;
-    font-size: 0.7rem;
-    padding: 6px;
-  }
-
-  .preview-items > div:not(:first-child) {
-    grid-template-columns: 1.5fr 0.5fr 0.5fr !important;
-    padding: 6px 0;
-  }
-
-  .preview-items p {
-    font-size: 0.8rem;
-  }
-
-  .preview-items small {
-    font-size: 0.65rem;
-  }
-
-  .preview-items span {\n    font-size: 0.75rem;\n  }\n\n  .preview-calculation {\n    padding: 10px;\n    margin-bottom: 12px;\n  }\n\n  .preview-calculation p {\n    font-size: 0.8rem;\n  }\n\n  .preview-total {\n    padding: 12px;\n    margin-bottom: 12px;\n  }\n\n  .preview-total span {\n    font-size: 0.8rem;\n  }\n\n  .preview-total strong {\n    font-size: 1.2rem;\n  }\n\n  .document-preview footer {\n    margin-top: 12px;\n    padding-top: 12px;\n  }\n\n  .document-preview footer strong {\n    font-size: 0.8rem;\n    margin-bottom: 6px;\n  }\n\n  .document-preview footer ol {\n    font-size: 0.75rem;\n    line-height: 1.5;\n    padding-left: 16px;\n  }\n\n  .document-preview footer li {\n    margin-bottom: 4px;\n  }\n\n  .action-buttons {\n    grid-template-columns: 1fr;\n    gap: 10px;\n  }\n\n  .btn {\n    font-size: 0.85rem;\n    padding: 10px 14px;\n    width: 100%;\n  }\n\n  .login-card {\n    max-width: 95%;\n    padding: 24px 16px;\n  }\n\n  .login-card h1 {\n    font-size: 2rem;\n    margin: 8px 0 16px;\n  }\n\n  .login-card form {\n    gap: 12px;\n  }\n\n  .admin-top {\n    padding: 30px 0;\n  }\n\n  .admin-top h1 {\n    font-size: 1.8rem;\n    margin: 4px 0;\n  }\n\n  .admin-signout {\n    padding: 8px 12px;\n    font-size: 0.8rem;\n  }\n}
-
-/* Mobile Small (640px and below) */\n@media (max-width: 640px) {\n  .admin-work {\n    display: block;\n    padding-top: 16px;\n  }\n\n  .document-sidebar {\n    grid-template-columns: 1fr;\n    gap: 8px;\n    margin-bottom: 16px;\n  }\n\n  .document-sidebar button {\n    padding: 8px 6px;\n    font-size: 0.75rem;\n  }\n\n  .milestone-note {\n    grid-column: auto;\n    padding: 8px;\n    margin-top: 12px;\n    font-size: 0.65rem;\n  }\n\n  .document-editor {\n    padding: 12px;\n  }\n\n  .editor-heading {\n    margin-bottom: 12px;\n    padding-bottom: 12px;\n  }\n\n  .editor-heading h2 {\n    font-size: 1.2rem;\n  }\n\n  .stage-picker {\n    padding: 12px;\n    gap: 6px;\n  }\n\n  .stage-picker label {\n    padding: 6px 10px;\n    font-size: 0.8rem;\n  }\n\n  .form-section {\n    padding: 12px;\n    margin-bottom: 10px;\n  }\n\n  .form-section legend {\n    font-size: 0.85rem;\n    margin-bottom: 10px;\n  }\n\n  .item-numbers {\n    grid-template-columns: 1fr;\n  }\n\n  .item-card {\n    padding: 10px;\n    margin-bottom: 10px;\n  }\n\n  .item-card-top {\n    margin-bottom: 10px;\n    padding-bottom: 8px;\n  }\n\n  .delete-item {\n    padding: 4px 8px;\n    font-size: 0.7rem;\n  }\n\n  .document-preview {\n    margin-top: 12px;\n    padding: 12px;\n  }\n\n  .document-preview header {\n    gap: 8px;\n    margin-bottom: 12px;\n    padding-bottom: 8px;\n  }\n\n  .preview-brand {\n    font-size: 1rem;\n  }\n\n  .preview-brand b {\n    font-size: 0.9rem;\n  }\n\n  .preview-brand small {\n    font-size: 0.6rem;\n  }\n\n  .document-preview header strong {\n    font-size: 0.85rem;\n  }\n\n  .document-preview header p {\n    font-size: 0.75rem;\n  }\n\n  .preview-meta {\n    gap: 12px;\n    margin-bottom: 12px;\n  }\n\n  .preview-meta span {\n    font-size: 0.65rem;\n    margin-bottom: 2px;\n  }\n\n  .preview-meta strong {\n    font-size: 0.8rem;\n  }\n\n  .preview-meta p {\n    font-size: 0.75rem;\n    line-height: 1.4;\n  }\n\n  .preview-items > div:first-child {\n    grid-template-columns: 1.5fr 0.4fr 0.4fr !important;\n    padding: 4px;\n    font-size: 0.65rem;\n    margin-bottom: 1px;\n  }\n\n  .preview-items > div:not(:first-child) {\n    grid-template-columns: 1.5fr 0.4fr 0.4fr !important;\n    padding: 4px 0;\n  }\n\n  .preview-items p {\n    font-size: 0.75rem;\n  }\n\n  .preview-items small {\n    font-size: 0.6rem;\n  }\n\n  .preview-calculation {\n    padding: 8px;\n    margin-bottom: 8px;\n  }\n\n  .preview-calculation p {\n    font-size: 0.75rem;\n  }\n\n  .preview-total {\n    padding: 10px;\n    margin-bottom: 10px;\n    gap: 8px;\n  }\n\n  .preview-total span {\n    font-size: 0.75rem;\n  }\n\n  .preview-total strong {\n    font-size: 1.1rem;\n  }\n\n  .document-preview footer {\n    margin-top: 10px;\n    padding-top: 8px;\n  }\n\n  .document-preview footer strong {\n    font-size: 0.75rem;\n    margin-bottom: 4px;\n  }\n\n  .document-preview footer ol {\n    font-size: 0.7rem;\n    line-height: 1.4;\n    padding-left: 14px;\n  }\n\n  .document-preview footer li {\n    margin-bottom: 3px;\n  }\n\n  .login-card {\n    padding: 20px 12px;\n  }\n\n  .login-card h1 {\n    font-size: 1.6rem;\n  }\n\n  .login-card label {\n    font-size: 0.7rem;\n  }\n\n  .login-card input {\n    padding: 10px 12px;\n    font-size: 16px;\n  }\n\n  .btn {\n    font-size: 0.8rem;\n    padding: 8px 12px;\n  }\n\n  .btn-secondary {\n    padding: 8px 10px;\n    font-size: 0.8rem;\n  }\n\n  .admin-top {\n    padding: 20px 0;\n  }\n\n  .admin-top h1 {\n    font-size: 1.5rem;\n  }\n\n  .admin-top .container {\n    gap: 12px;\n  }\n\n  .admin-signout {\n    padding: 6px 10px;\n    font-size: 0.75rem;\n  }\n}
 
 /* ===== PRINT STYLES ===== */
 @media print {
-  /* Reset all elements */
   * {
-    visibility: hidden !important;
-    height: auto !important;
+    visibility: hidden;
   }
 
-  /* Make document visible */
-  #print-document {
-    visibility: visible !important;
-    display: block !important;
-    position: static !important;
-    width: 100% !important;
-    height: auto !important;
-    background: white !important;
-    border: none !important;
-    box-shadow: none !important;
-    margin: 0 !important;
-    padding: 0 !important;
-    page-break-before: avoid !important;
-  }
-
-  /* Show all children of print-document */
+  #print-document,
   #print-document * {
-    visibility: visible !important;
+    visibility: visible;
   }
 
-  /* Body and HTML reset */
-  html,
-  body {
+  body,
+  html {
+    margin: 0;
+    padding: 0;
+    height: auto;
+  }
+
+  #print-document {
+    background: #fff;
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+    height: auto;
+    left: 0;
     margin: 0 !important;
-    padding: 0 !important;
-    height: auto !important;
-    width: 100% !important;
-    background: white !important;
+    max-width: 100% !important;
+    padding: 12px 15px !important;
+    position: absolute;
+    top: 0;
+    width: 100%;
   }
 
   /* Page setup */

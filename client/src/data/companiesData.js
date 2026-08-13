@@ -14,7 +14,7 @@ export const companiesData = {
       phone: "+91 93565 35803",
       email: "info@elite-paint.com",
       website: "elite-paint.vercel.app",
-      address: "Shop 4, Kalewadi Phata Road, Pimple Saudagar, Pune, Maharashtra 411027",
+      address: "Elite Paint Studio, India",
     },
     defaultTerms: [
       "40% advance is due before work begins; 80% is due on substantial completion; the final balance is due after handover.",

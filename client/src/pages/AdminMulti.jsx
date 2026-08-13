@@ -502,8 +502,6 @@ export default function Admin() {
                 {selectedCompany.contact.website}
                 <br />
                 {selectedCompany.contact.phone}
-                <br />
-                {selectedCompany.contact.address}
               </p>
             </div>
           </div>
