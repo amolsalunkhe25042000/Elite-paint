@@ -62,8 +62,7 @@
   display: flex;
 }
 .avatars i {
-  background: url("https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=100&q=80")
-    center/cover;
+  background: #f0b58b;
   border: 2px solid #edf3ee;
   border-radius: 50%;
   height: 28px;
@@ -71,10 +70,10 @@
   width: 28px;
 }
 .avatars i:nth-child(2) {
-  background-image: url("https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=100&q=80");
+  background: #8ca7a2;
 }
 .avatars i:nth-child(3) {
-  background-image: url("https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=100&q=80");
+  background: #f3c77f;
 }
 .hero-image {
   height: 520px;
