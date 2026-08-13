@@ -3,7 +3,6 @@ import CompanySettings from "../components/CompanySettings";
 import { companiesData, newItemTemplate, newCustomerTemplate } from "../data/companiesData";
 import "./Admin.css";
 
-const today = () => new Date().toISOString().slice(0, 10);
 const money = (value) =>
   new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(Number(value) || 0);
 
