@@ -1,0 +1,352 @@
+/* Company Settings Modal */
+.company-settings-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+}
+
+.company-settings-modal {
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  animation: slideUp 0.3s ease;
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.settings-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px;
+  border-bottom: 2px solid #e0e8e1;
+  position: sticky;
+  top: 0;
+  background: #fff;
+}
+
+.settings-header h2 {
+  margin: 0;
+  color: #193738;
+  font-size: 1.4rem;
+  font-weight: 700;
+}
+
+.close-btn {
+  background: transparent;
+  border: 0;
+  font-size: 1.5rem;
+  color: #587071;
+  cursor: pointer;
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.close-btn:hover {
+  background: #f5faf5;
+  color: #193738;
+}
+
+.settings-form {
+  padding: 24px;
+  display: grid;
+  gap: 28px;
+}
+
+.settings-section {
+  display: grid;
+  gap: 16px;
+}
+
+.settings-section h3 {
+  margin: 0;
+  color: #193738;
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  padding-bottom: 12px;
+  border-bottom: 1px solid #d7e0da;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.form-row label {
+  display: grid;
+  gap: 8px;
+  color: #405654;
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.form-row input {
+  background: #fff;
+  border: 2px solid #d7e0da;
+  border-radius: 6px;
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: all 0.2s ease;
+}
+
+.form-row input:hover {
+  border-color: #b5c9be;
+}
+
+.form-row input:focus {
+  outline: none;
+  border-color: #dc6b42;
+  box-shadow: 0 0 0 3px rgba(220, 107, 66, 0.1);
+}
+
+/* Color Grid */
+.color-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 16px;
+}
+
+.color-input {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 12px;
+  background: #f9fdf9;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: #405654;
+  font-weight: 600;
+}
+
+.color-input input[type="color"] {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #d7e0da;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.color-input code {
+  font-size: 0.75rem;
+  background: #fff;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-family: "Courier New", monospace;
+  color: #587071;
+}
+
+/* Terms Editor */
+.terms-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+}
+
+.terms-header h3 {
+  margin: 0;
+  padding-bottom: 0;
+  border: none;
+}
+
+.edit-terms-btn {
+  background: transparent;
+  border: 1px solid #d7e0da;
+  color: #587071;
+  padding: 6px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.edit-terms-btn:hover {
+  background: #f5faf5;
+  border-color: #193738;
+  color: #193738;
+}
+
+.terms-editor {
+  display: grid;
+  gap: 12px;
+}
+
+.term-input {
+  position: relative;
+  display: grid;
+  gap: 8px;
+}
+
+.term-input textarea {
+  background: #fff;
+  border: 2px solid #d7e0da;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 0.9rem;
+  font-family: inherit;
+  resize: vertical;
+  transition: all 0.2s ease;
+  color: #405654;
+}
+
+.term-input textarea:hover {
+  border-color: #b5c9be;
+}
+
+.term-input textarea:focus {
+  outline: none;
+  border-color: #dc6b42;
+  box-shadow: 0 0 0 3px rgba(220, 107, 66, 0.1);
+}
+
+.remove-term-btn {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: #ffe8e0;
+  border: 0;
+  color: #b43e25;
+  width: 28px;
+  height: 28px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.2s ease;
+}
+
+.remove-term-btn:hover {
+  background: #ffc9b3;
+}
+
+.add-term-btn {
+  background: #e8f0e6;
+  border: 2px solid #d7e0da;
+  color: #193738;
+  padding: 10px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.add-term-btn:hover {
+  background: #dbe8d6;
+  border-color: #b5c9be;
+}
+
+.terms-preview {
+  background: #f9fdf9;
+  padding: 16px;
+  border-radius: 6px;
+  border: 1px solid #d7e0da;
+}
+
+.terms-preview ol {
+  margin: 0;
+  padding-left: 20px;
+  color: #587071;
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+.terms-preview li {
+  margin-bottom: 8px;
+}
+
+/* Settings Actions */
+.settings-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 2px solid #d7e0da;
+}
+
+.settings-actions .btn {
+  padding: 12px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  border-radius: 6px;
+  border: 0;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.settings-actions .btn-primary {
+  background: #193738;
+  color: #fff;
+}
+
+.settings-actions .btn-primary:hover {
+  background: #0f2425;
+  box-shadow: 0 4px 12px rgba(25, 55, 56, 0.2);
+}
+
+.settings-actions .btn-outline {
+  background: transparent;
+  border: 2px solid #d7e0da;
+  color: #587071;
+}
+
+.settings-actions .btn-outline:hover {
+  border-color: #193738;
+  background: #f9fdf9;
+  color: #193738;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .company-settings-modal {
+    max-height: 100vh;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+  }
+
+  .color-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .settings-actions {
+    grid-template-columns: 1fr;
+  }
+}
