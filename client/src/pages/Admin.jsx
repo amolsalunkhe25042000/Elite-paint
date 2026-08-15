@@ -1,52 +1,494 @@
 import { useState } from "react";
 import "./Admin.css";
+import { calculateTotals, formatCurrency } from "../utils/quotation";
 
-const today = () => new Date().toISOString().slice(0, 10);
-const newItem = () => ({ id: crypto.randomUUID(), description: "Interior wall painting", paint: "Premium emulsion paint", qty: 1, unit: "Room", rate: "" });
-const blankDetails = () => ({ customerName: "", contact: "", address: "", date: today() });
-const money = (value) => new Intl.NumberFormat("en-IN", { style: "currency", currency: "INR", maximumFractionDigits: 0 }).format(Number(value) || 0);
+const companyProfile = {
+  name: "ElitePaint",
+  tagline: "Premium Painting Services in Pune",
+  address: "12 Laxmi Colony, Near City Center, Pune, Maharashtra",
+  phone: "+91 98765 43210",
+  email: "hello@elitepaint.in",
+  website: "www.elitepaint.in",
+};
 
-export default function Admin() {
-  const [authorised, setAuthorised] = useState(false);
-  const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [documentType, setDocumentType] = useState("quotation");
-  const [invoiceStage, setInvoiceStage] = useState("40");
-  const [details, setDetails] = useState(blankDetails);
-  const [items, setItems] = useState([newItem()]);
-  const [discount, setDiscount] = useState("");
-  const [editingId, setEditingId] = useState(null);
-  const [savedDocuments, setSavedDocuments] = useState(() => JSON.parse(localStorage.getItem("elite-paint-documents") || "[]"));
+const createBlankRow = (id) => ({
+  id,
+  description: "",
+  unit: "",
+  qty: 1,
+  rate: 0,
+});
 
-  const subtotal = items.reduce((sum, item) => sum + (Number(item.qty) || 0) * (Number(item.rate) || 0), 0);
-  const discountAmount = subtotal * Math.min(Math.max(Number(discount) || 0, 0), 100) / 100;
-  const total = subtotal - discountAmount;
-  const invoiceAmount = documentType === "invoice" ? total * Number(invoiceStage) / 100 : total;
-  const title = documentType === "quotation" ? "Quotation" : "Tax Invoice";
-  const documentNumber = editingId || `${documentType === "quotation" ? "QT" : "INV"}-${details.date.replaceAll("-", "").slice(2) || "DRAFT"}`;
+const defaultRows = [
+  {
+    id: 1,
+    description: "Wall primer and surface preparation",
+    unit: "Room",
+    qty: 2,
+    rate: 2400,
+  },
+  {
+    id: 2,
+    description: "Premium emulsion paint application",
+    unit: "SQFT",
+    qty: 800,
+    rate: 18,
+  },
+  {
+    id: 3,
+    description: "Ceiling and trim finishing",
+    unit: "Job",
+    qty: 1,
+    rate: 4200,
+  },
+];
 
-  const changeDetail = (event) => setDetails((current) => ({ ...current, [event.target.name]: event.target.value }));
-  const updateItem = (id, field, value) => setItems((current) => current.map((item) => item.id === id ? { ...item, [field]: value } : item));
-  const resetDocument = () => { setDetails(blankDetails()); setItems([newItem()]); setDiscount(""); setEditingId(null); setInvoiceStage("40"); };
-  const unlock = (event) => { event.preventDefault(); if (password === "Amol@123") { setAuthorised(true); setError(""); } else setError("Incorrect password. Please try again."); };
-  const save = () => {
-    const record = { id: editingId || `${documentType === "quotation" ? "QT" : "INV"}-${Date.now().toString().slice(-7)}`, documentType, invoiceStage, details, items, discount, updatedAt: new Date().toLocaleString("en-IN") };
-    const next = editingId ? savedDocuments.map((doc) => doc.id === editingId ? record : doc) : [record, ...savedDocuments];
-    localStorage.setItem("elite-paint-documents", JSON.stringify(next)); setSavedDocuments(next); setEditingId(record.id);
+const getReferenceNumber = (type, index = 1) => {
+  const prefix = type === "quotation" ? "QT" : "INV";
+  return `${prefix}-ELITE-${String(index).padStart(3, "0")}`;
+};
+
+function Admin() {
+  const today = new Date().toISOString().slice(0, 10);
+  const [docType, setDocType] = useState("quotation");
+  const [formData, setFormData] = useState({
+    referenceNo: getReferenceNumber("quotation"),
+    customerName: "",
+    contactNo: "",
+    date: today,
+    siteAddress: "",
+    validFor: "15 days",
+    scopeOfWork: "Interior wall painting, ceiling touch-up, and surface preparation for the specified area.",
+  });
+  const [rows, setRows] = useState(defaultRows);
+  const [statusMessage, setStatusMessage] = useState("Ready to generate a quotation.");
+  const [savedDocs, setSavedDocs] = useState(() => {
+    if (typeof window === "undefined") return [];
+
+    try {
+      const stored = window.localStorage.getItem("elite-paint-documents");
+      return stored ? JSON.parse(stored) : [];
+    } catch {
+      return [];
+    }
+  });
+
+  const totals = calculateTotals(rows);
+
+  const handleDocTypeChange = (type) => {
+    setDocType(type);
+    setFormData((prev) => ({
+      ...prev,
+      referenceNo: getReferenceNumber(type, savedDocs.length + 1),
+    }));
+    setStatusMessage(
+      type === "quotation"
+        ? "Quotation mode selected."
+        : "Invoice mode selected."
+    );
   };
-  const edit = (record) => { setDocumentType(record.documentType); setInvoiceStage(record.invoiceStage); setDetails(record.details); setItems(record.items); setDiscount(record.discount); setEditingId(record.id); window.scrollTo({ top: 0, behavior: "smooth" }); };
-  const remove = (id) => { const next = savedDocuments.filter((doc) => doc.id !== id); localStorage.setItem("elite-paint-documents", JSON.stringify(next)); setSavedDocuments(next); if (editingId === id) resetDocument(); };
 
-  if (!authorised) return <main className="admin-login"><section className="login-card"><div className="admin-lock">E</div><p className="eyebrow">Elite Paint workspace</p><h1>Admin access</h1><p>Sign in to create customer-ready estimates and invoices.</p><form onSubmit={unlock}><label>Password<input autoFocus type="password" value={password} onChange={(event) => setPassword(event.target.value)} placeholder="Enter password" /></label>{error && <span className="admin-error">{error}</span>}<button className="btn btn-primary" type="submit">Open workspace →</button></form></section></main>;
+  const handleFieldChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-  return <main className="admin-page"><section className="admin-top"><div className="container"><div><p className="eyebrow">Admin workspace</p><h1>Painting documents, made simple.</h1><p>Build line-by-line quotations, issue milestone invoices, and save a polished PDF for every customer.</p></div><button className="admin-signout" onClick={() => setAuthorised(false)}>Sign out</button></div></section>
-    <section className="admin-work container"><aside className="document-sidebar"><button className={documentType === "quotation" ? "selected" : ""} onClick={() => { resetDocument(); setDocumentType("quotation"); }}><span>01</span>Quotation<small>Before work starts</small></button><button className={documentType === "invoice" ? "selected" : ""} onClick={() => { resetDocument(); setDocumentType("invoice"); }}><span>02</span>Invoice<small>Milestone payment</small></button><div className="milestone-note"><strong>Payment plan</strong><p>40% advance<br />80% work completed<br />100% final completion</p></div></aside>
-      <div className="document-editor"><div className="editor-heading"><div><p className="eyebrow">{documentType === "quotation" ? "Project estimate" : "Payment request"}</p><h2>{title} details</h2></div><span className="doc-number">{documentNumber}</span></div>
-        {documentType === "invoice" && <fieldset className="stage-picker"><legend>Invoice milestone</legend>{[["40", "40% advance"], ["80", "80% completed"], ["100", "100% final invoice"]].map(([value, label]) => <label key={value} className={invoiceStage === value ? "active" : ""}><input type="radio" value={value} checked={invoiceStage === value} onChange={(event) => setInvoiceStage(event.target.value)} />{label}</label>)}</fieldset>}
-        <form className="document-form" onSubmit={(event) => { event.preventDefault(); save(); }}><fieldset className="form-section"><legend>Customer information</legend><div className="form-columns"><label>Customer name<input required name="customerName" value={details.customerName} onChange={changeDetail} placeholder="Customer full name" /></label><label>Contact number<input required name="contact" value={details.contact} onChange={changeDetail} placeholder="Phone / WhatsApp" /></label></div><div className="form-columns"><label>Document date<input required type="date" name="date" value={details.date} onChange={changeDetail} /></label><label>Customer address<textarea required name="address" value={details.address} onChange={changeDetail} rows="3" placeholder="House / building, area, city" /></label></div></fieldset>
-          <div className="line-items"><div className="line-items-title"><div><p className="eyebrow">Work items</p><h3>Painting scope & pricing</h3></div><button type="button" className="btn btn-secondary" onClick={() => setItems((current) => [...current, newItem()])}>+ Add item</button></div>{items.map((item, index) => <div className="item-card" key={item.id}><div className="item-card-top"><div><strong>Item {index + 1}</strong><span className="item-rate-display">{money((Number(item.qty) || 0) * (Number(item.rate) || 0))}</span></div>{items.length > 1 && <button type="button" className="delete-item" onClick={() => setItems((current) => current.filter((entry) => entry.id !== item.id))}>✕ Delete</button>}</div><fieldset className="item-fields"><div className="form-full"><label>Work description<input value={item.description} onChange={(event) => updateItem(item.id, "description", event.target.value)} placeholder="e.g. Ceiling painting" /></label></div><div className="form-full"><label>Paint / material<input value={item.paint} onChange={(event) => updateItem(item.id, "paint", event.target.value)} placeholder="e.g. Asian Paints Royale" /></label></div><div className="item-numbers"><label>Quantity<input min="0" type="number" value={item.qty} onChange={(event) => updateItem(item.id, "qty", event.target.value)} placeholder="0" /></label><label>Unit<select value={item.unit} onChange={(event) => updateItem(item.id, "unit", event.target.value)}><option>Room</option><option>Sq. ft.</option><option>Sq. m.</option><option>Wall</option><option>Coat</option><option>Job</option></select></label><label>Rate per unit (₹)<input min="0" type="number" value={item.rate} onChange={(event) => updateItem(item.id, "rate", event.target.value)} placeholder="0" /></label></div></fieldset></div>)}</div>
-          <fieldset className="form-section"><legend>Pricing & totals</legend><div className="discount-row"><label>Optional discount (%)<input min="0" max="100" type="number" value={discount} onChange={(event) => setDiscount(event.target.value)} placeholder="0" /></label></div><div className="totals-summary"><div className="total-line"><span>Subtotal</span><strong>{money(subtotal)}</strong></div>{discountAmount > 0 && <div className="total-line discount-line"><span>Discount</span><strong>− {money(discountAmount)}</strong></div>}{documentType === "invoice" && <div className="total-line"><span>Milestone ({invoiceStage}%)</span><strong>{money(invoiceAmount)}</strong></div>}<div className="total-line final-total"><span>{documentType === "quotation" ? "Estimated total" : "Amount due"}</span><strong>{money(documentType === "invoice" ? invoiceAmount : total)}</strong></div></div></fieldset><div className="form-actions"><div className="action-buttons"><button className="btn btn-primary" type="submit">{editingId ? "✓ Update document" : "✓ Save document"}</button><button className="btn btn-success" type="button" onClick={() => window.print()}>⬇ Print / PDF →</button></div><button className="text-button" type="button" onClick={resetDocument}>Start new document</button></div></form>
-        <section className="saved-documents"><div><p className="eyebrow">Local records</p><h3>Saved documents</h3></div>{savedDocuments.length === 0 ? <p>No saved quotations or invoices yet.</p> : savedDocuments.map((doc) => <div className="saved-document" key={doc.id}><div><strong>{doc.id}</strong><span>{doc.documentType} · {doc.details.customerName || "Unnamed customer"}</span><small>Updated {doc.updatedAt}</small></div><button type="button" onClick={() => edit(doc)}>Edit</button><button type="button" className="delete-item" onClick={() => remove(doc.id)}>Delete</button></div>)}</section></div>
-      <article className="document-preview" id="print-document"><header><div className="preview-brand"><span>E</span><div>Elite<b>Paint</b><small>PAINTING STUDIO</small></div></div><div><strong>{title.toUpperCase()}</strong><p>{documentNumber}</p></div></header><div className="preview-meta"><div><span>Billed to</span><strong>{details.customerName || "Customer name"}</strong><p>{details.contact || "Contact number"}<br />{details.address || "Customer address"}</p></div><div><span>Date</span><strong>{details.date ? new Date(`${details.date}T00:00:00`).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" }) : "—"}</strong><p>elite-paint.vercel.app<br />+91 93565 35803</p></div></div><div className="preview-table preview-items"><div><span>Description & material</span><span>Qty</span><span>Amount</span></div>{items.map((item) => <div key={item.id}><p><b>{item.description || "Painting work"}</b><small>{item.paint || "Paint / material"}</small></p><span>{item.qty || 0} {item.unit}</span><strong>{money((Number(item.qty) || 0) * (Number(item.rate) || 0))}</strong></div>)}</div><div className="preview-calculation"><p>Subtotal <strong>{money(subtotal)}</strong></p>{discountAmount > 0 && <p>Discount ({discount}%) <strong>− {money(discountAmount)}</strong></p>}{documentType === "invoice" && <p>Milestone ({invoiceStage}%) <strong>{money(invoiceAmount)}</strong></p>}</div><div className="preview-total"><span>{documentType === "quotation" ? "Estimated total" : "Amount due"}</span><strong>{money(documentType === "invoice" ? invoiceAmount : total)}</strong></div><footer><strong>Painting terms & warranty</strong><ol><li>40% advance is due before work begins; 80% is due on substantial completion; the final balance is due after handover.</li><li>Interior paint workmanship carries a 12-month service warranty for peeling or flaking caused by application defects. Dampness, leaks, cracks, structural movement and external damage are excluded.</li><li>Exterior paint and waterproofing warranties apply only where the selected product manufacturer supports them and surfaces are prepared as agreed.</li><li>Extra surface repairs, colour changes or scope additions require written approval and may be charged separately.</li></ol><div>Thank you for choosing Elite Paint.</div></footer></article>
-    </section></main>;
+  const handleRowChange = (id, field, rawValue) => {
+    const value =
+      field === "qty" || field === "rate"
+        ? Number(rawValue || 0)
+        : rawValue;
+
+    setRows((prevRows) =>
+      prevRows.map((row) =>
+        row.id === id ? { ...row, [field]: value } : row
+      )
+    );
+  };
+
+  const addRow = () => {
+    setRows((prevRows) => [...prevRows, createBlankRow(Date.now() + Math.random())]);
+  };
+
+  const removeRow = (id) => {
+    setRows((prevRows) => {
+      if (prevRows.length === 1) return prevRows;
+      return prevRows.filter((row) => row.id !== id);
+    });
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+
+    const newDocument = {
+      id: Date.now(),
+      type: docType,
+      ...formData,
+      rows,
+      subtotal: totals.subtotal,
+      total: totals.total,
+      createdAt: new Date().toISOString(),
+    };
+
+    const nextDocs = [newDocument, ...savedDocs].slice(0, 8);
+
+    if (typeof window !== "undefined") {
+      window.localStorage.setItem(
+        "elite-paint-documents",
+        JSON.stringify(nextDocs)
+      );
+    }
+
+    setSavedDocs(nextDocs);
+    setStatusMessage(
+      `${docType === "quotation" ? "Quotation" : "Invoice"} saved successfully.`
+    );
+  };
+
+  const handlePrint = () => {
+    setStatusMessage("Print dialog opened.");
+    window.print();
+  };
+
+  const resetForm = () => {
+    setRows(defaultRows);
+    setFormData({
+      referenceNo: getReferenceNumber(docType),
+      customerName: "",
+      contactNo: "",
+      date: today,
+      siteAddress: "",
+      validFor: "15 days",
+      scopeOfWork:
+        "Interior wall painting, ceiling touch-up, and surface preparation for the specified area.",
+    });
+    setStatusMessage("Form reset successfully.");
+  };
+
+  return (
+    <div className="admin-page">
+      <div className="admin-header">
+        <div>
+          <p className="eyebrow">Operations</p>
+          <h1>Quotation & Invoice Management</h1>
+        </div>
+        <div className="admin-header-actions">
+          <button
+            type="button"
+            className={`toggle-btn ${docType === "quotation" ? "active" : ""}`}
+            onClick={() => handleDocTypeChange("quotation")}
+          >
+            Quotation
+          </button>
+          <button
+            type="button"
+            className={`toggle-btn ${docType === "invoice" ? "active" : ""}`}
+            onClick={() => handleDocTypeChange("invoice")}
+          >
+            Invoice
+          </button>
+        </div>
+      </div>
+
+      <div className="admin-layout">
+        <aside className="admin-panel">
+          <div className="panel-card">
+            <h3>Customer details</h3>
+            <form onSubmit={handleSubmit} className="quote-form">
+              <div className="field-row two-col">
+                <label>
+                  <span>{docType === "quotation" ? "Quotation No." : "Invoice No."}</span>
+                  <input
+                    type="text"
+                    name="referenceNo"
+                    value={formData.referenceNo}
+                    onChange={handleFieldChange}
+                  />
+                </label>
+                <label>
+                  <span>Date</span>
+                  <input
+                    type="date"
+                    name="date"
+                    value={formData.date}
+                    onChange={handleFieldChange}
+                  />
+                </label>
+              </div>
+
+              <div className="field-row two-col">
+                <label>
+                  <span>Customer Name</span>
+                  <input
+                    type="text"
+                    name="customerName"
+                    placeholder="Enter customer name"
+                    value={formData.customerName}
+                    onChange={handleFieldChange}
+                  />
+                </label>
+                <label>
+                  <span>Contact</span>
+                  <input
+                    type="text"
+                    name="contactNo"
+                    placeholder="Mobile / phone"
+                    value={formData.contactNo}
+                    onChange={handleFieldChange}
+                  />
+                </label>
+              </div>
+
+              <label>
+                <span>Site Address</span>
+                <textarea
+                  name="siteAddress"
+                  rows="3"
+                  placeholder="Site address"
+                  value={formData.siteAddress}
+                  onChange={handleFieldChange}
+                />
+              </label>
+
+              <label>
+                <span>Scope of Work</span>
+                <textarea
+                  name="scopeOfWork"
+                  rows="4"
+                  value={formData.scopeOfWork}
+                  onChange={handleFieldChange}
+                />
+              </label>
+
+              <label>
+                <span>Valid For</span>
+                <input
+                  type="text"
+                  name="validFor"
+                  value={formData.validFor}
+                  onChange={handleFieldChange}
+                />
+              </label>
+
+              <div className="item-table-header">
+                <h4>Quotation Details</h4>
+                <button type="button" className="btn btn-dark" onClick={addRow}>
+                  + Add Row
+                </button>
+              </div>
+
+              <div className="line-items">
+                {rows.map((row, index) => (
+                  <div className="line-item" key={row.id}>
+                    <span className="serial-no">{index + 1}</span>
+                    <input
+                      type="text"
+                      placeholder="Description"
+                      value={row.description}
+                      onChange={(event) =>
+                        handleRowChange(row.id, "description", event.target.value)
+                      }
+                    />
+                    <input
+                      type="text"
+                      placeholder="Unit"
+                      value={row.unit}
+                      onChange={(event) =>
+                        handleRowChange(row.id, "unit", event.target.value)
+                      }
+                    />
+                    <input
+                      type="number"
+                      min="0"
+                      placeholder="Qty"
+                      value={row.qty}
+                      onChange={(event) =>
+                        handleRowChange(row.id, "qty", event.target.value)
+                      }
+                    />
+                    <input
+                      type="number"
+                      min="0"
+                      placeholder="Rate"
+                      value={row.rate}
+                      onChange={(event) =>
+                        handleRowChange(row.id, "rate", event.target.value)
+                      }
+                    />
+                    <div className="amount-box">
+                      {formatCurrency(row.qty * row.rate)}
+                    </div>
+                    <button
+                      type="button"
+                      className="remove-row"
+                      onClick={() => removeRow(row.id)}
+                      aria-label="Remove row"
+                    >
+                      ×
+                    </button>
+                  </div>
+                ))}
+              </div>
+
+              <div className="summary-box">
+                <div>
+                  <span>Subtotal</span>
+                  <strong>{formatCurrency(totals.subtotal)}</strong>
+                </div>
+                <div>
+                  <span>Total</span>
+                  <strong>{formatCurrency(totals.total)}</strong>
+                </div>
+              </div>
+
+              <div className="form-actions">
+                <button type="button" className="btn btn-light" onClick={resetForm}>
+                  Reset
+                </button>
+                <button type="button" className="btn btn-outline" onClick={handlePrint}>
+                  Print
+                </button>
+                <button type="submit" className="btn btn-primary">
+                  Save {docType === "quotation" ? "Quotation" : "Invoice"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </aside>
+
+        <main className="document-preview area">
+          <div className="status-pill">{statusMessage}</div>
+
+          <div className="document-sheet">
+            <header className="sheet-header">
+              <div className="brand-box">
+                <div className="brand-mark">EP</div>
+                <div>
+                  <h2>{companyProfile.name}</h2>
+                  <p>{companyProfile.tagline}</p>
+                </div>
+              </div>
+
+              <div className="sheet-meta">
+                <p className="meta-label">
+                  {docType === "quotation" ? "Quotation" : "Invoice"}
+                </p>
+                <p>{formData.referenceNo}</p>
+                <p>Date: {formData.date}</p>
+                <p>Valid for: {formData.validFor}</p>
+              </div>
+            </header>
+
+            <div className="company-contact">
+              <div>
+                <strong>Address</strong>
+                <span>{companyProfile.address}</span>
+              </div>
+              <div>
+                <strong>Contact</strong>
+                <span>{companyProfile.phone}</span>
+              </div>
+              <div>
+                <strong>Email</strong>
+                <span>{companyProfile.email}</span>
+              </div>
+            </div>
+
+            <section className="customer-block">
+              <div>
+                <span className="field-label">Customer Name</span>
+                <strong>{formData.customerName || "Customer Name"}</strong>
+              </div>
+              <div>
+                <span className="field-label">Contact</span>
+                <strong>{formData.contactNo || "Customer contact"}</strong>
+              </div>
+              <div>
+                <span className="field-label">Site Address</span>
+                <strong>{formData.siteAddress || "Site address"}</strong>
+              </div>
+            </section>
+
+            <section className="scope-block">
+              <h4>Scope of Work</h4>
+              <p>{formData.scopeOfWork}</p>
+            </section>
+
+            <table className="quote-table">
+              <thead>
+                <tr>
+                  <th>Sr</th>
+                  <th>Description</th>
+                  <th>Unit</th>
+                  <th>Qty</th>
+                  <th>Rate (₹)</th>
+                  <th>Amount (₹)</th>
+                </tr>
+              </thead>
+              <tbody>
+                {rows.map((row, index) => (
+                  <tr key={row.id}>
+                    <td>{index + 1}</td>
+                    <td>{row.description || "-"}</td>
+                    <td>{row.unit || "-"}</td>
+                    <td>{row.qty || 0}</td>
+                    <td>{formatCurrency(row.rate)}</td>
+                    <td>{formatCurrency(row.qty * row.rate)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+
+            <div className="totals-panel">
+              <div>
+                <span>Subtotal</span>
+                <strong>{formatCurrency(totals.subtotal)}</strong>
+              </div>
+              <div>
+                <span>Total</span>
+                <strong>{formatCurrency(totals.total)}</strong>
+              </div>
+            </div>
+
+            <section className="terms-box">
+              <h4>Terms & Conditions</h4>
+              <ol>
+                <li>
+                  <strong>Timely Delivery:</strong> We complete the work on the agreed schedule. If the delay is due to our fault, no extra labor charges will be applied.
+                </li>
+                <li>
+                  <strong>Payment Terms:</strong> 40% advance at booking, 40% when 90% of the work is completed, and the remaining 20% after final completion.
+                </li>
+                <li>
+                  <strong>5-Year Workmanship Warranty:</strong> We provide a 5-year warranty for painting workmanship. The warranty does not cover wall cracks, water leakage, seepage, dampness, structural damage, or damage caused by external factors.
+                </li>
+                <li>
+                  <strong>No Hidden Charges:</strong> The quoted price is fixed. Any additional work requested by the customer will be charged only after prior approval.
+                </li>
+              </ol>
+            </section>
+          </div>
+
+          <div className="recent-docs">
+            <h3>Recent saved records</h3>
+            {savedDocs.length === 0 ? (
+              <p>No saved quotations or invoices yet.</p>
+            ) : (
+              <ul>
+                {savedDocs.map((doc) => (
+                  <li key={doc.id}>
+                    <span>{doc.type === "quotation" ? "Quotation" : "Invoice"}</span>
+                    <strong>{doc.referenceNo}</strong>
+                    <small>{doc.customerName || "Customer"}</small>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </main>
+      </div>
+    </div>
+  );
 }
+
+export default Admin;
