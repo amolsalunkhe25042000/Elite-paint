@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./Admin.css";
+import {
+  deleteCustomerRequestById,
+  deleteDocumentById,
+  findDocumentByReference,
+  loadCustomerRequests,
+  loadDocuments,
+  normalizeReference,
+  saveCustomerRequests,
+  saveDocuments,
+} from "../utils/documentStorage";
 import { calculateTotals, formatCurrency } from "../utils/quotation";
 
 const companyProfile = {
   name: "ElitePaint",
   tagline: "Premium Painting Services in Pune",
-  address: "12 Laxmi Colony, Near City Center, Pune, Maharashtra",
-  phone: "+91 98765 43210",
-  email: "hello@elitepaint.in",
+  address: "Pune, Maharashtra",
+  phone: "+91 9356535803",
+  email: "elitepaintservice@gmail.com",
   website: "www.elitepaint.in",
 };
 
@@ -43,13 +53,25 @@ const defaultRows = [
   },
 ];
 
+const ADMIN_PASSWORD = "992125";
+
+const getDailyAdminPassword = () => {
+  const day = new Date().getDate();
+  return `${day}${ADMIN_PASSWORD}`;
+};
+
 const getReferenceNumber = (type, index = 1) => {
-  const prefix = type === "quotation" ? "QT" : "INV";
-  return `${prefix}-ELITE-${String(index).padStart(3, "0")}`;
+  const today = new Date();
+  const dateStr = today.toISOString().slice(0, 10).replace(/-/g, "");
+  const prefix = type === "quotation" ? "QE" : "INV";
+  return `${prefix}-${dateStr}-${String(index).padStart(2, "0")}`;
 };
 
 function Admin() {
   const today = new Date().toISOString().slice(0, 10);
+  const [isUnlocked, setIsUnlocked] = useState(false);
+  const [passwordInput, setPasswordInput] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [docType, setDocType] = useState("quotation");
   const [formData, setFormData] = useState({
     referenceNo: getReferenceNumber("quotation"),
@@ -62,24 +84,41 @@ function Admin() {
   });
   const [rows, setRows] = useState(defaultRows);
   const [statusMessage, setStatusMessage] = useState("Ready to generate a quotation.");
-  const [savedDocs, setSavedDocs] = useState(() => {
-    if (typeof window === "undefined") return [];
-
-    try {
-      const stored = window.localStorage.getItem("elite-paint-documents");
-      return stored ? JSON.parse(stored) : [];
-    } catch {
-      return [];
-    }
-  });
+  const [savedDocs, setSavedDocs] = useState(() => loadDocuments("quotation"));
+  const [customerRequests, setCustomerRequests] = useState(() => loadCustomerRequests());
+  const [searchTerm, setSearchTerm] = useState("");
+  const [selectedDoc, setSelectedDoc] = useState(null);
 
   const totals = calculateTotals(rows);
 
+  const handlePasswordSubmit = (event) => {
+    event.preventDefault();
+
+    if (passwordInput.trim() === getDailyAdminPassword()) {
+      setIsUnlocked(true);
+      setPasswordError("");
+      return;
+    }
+
+    setPasswordError("Incorrect password. Please try again.");
+    setPasswordInput("");
+  };
+
+  useEffect(() => {
+    setSavedDocs(loadDocuments(docType));
+    setCustomerRequests(loadCustomerRequests());
+    setSelectedDoc(null);
+    setSearchTerm("");
+  }, [docType]);
+
   const handleDocTypeChange = (type) => {
+    const docsForType = loadDocuments(type);
+
     setDocType(type);
+    setSavedDocs(docsForType);
     setFormData((prev) => ({
       ...prev,
-      referenceNo: getReferenceNumber(type, savedDocs.length + 1),
+      referenceNo: getReferenceNumber(type, docsForType.length + 1),
     }));
     setStatusMessage(
       type === "quotation"
@@ -120,28 +159,62 @@ function Admin() {
   const handleSubmit = (event) => {
     event.preventDefault();
 
+    const reference = normalizeReference(formData.referenceNo);
+    const duplicateDoc = findDocumentByReference(savedDocs, reference, docType);
+
+    if (duplicateDoc && duplicateDoc.referenceNo !== formData.referenceNo) {
+      setStatusMessage("This document number already exists. Please choose a different number.");
+      return;
+    }
+
     const newDocument = {
       id: Date.now(),
       type: docType,
       ...formData,
+      referenceNo: reference,
       rows,
       subtotal: totals.subtotal,
       total: totals.total,
       createdAt: new Date().toISOString(),
     };
 
-    const nextDocs = [newDocument, ...savedDocs].slice(0, 8);
+    const nextDocs = [
+      newDocument,
+      ...savedDocs.filter(
+        (doc) => normalizeReference(doc.referenceNo) !== normalizeReference(newDocument.referenceNo)
+      ),
+    ];
 
-    if (typeof window !== "undefined") {
-      window.localStorage.setItem(
-        "elite-paint-documents",
-        JSON.stringify(nextDocs)
-      );
-    }
-
+    saveDocuments(nextDocs, docType);
     setSavedDocs(nextDocs);
+    setSelectedDoc(newDocument);
+    setSearchTerm(newDocument.referenceNo);
     setStatusMessage(
       `${docType === "quotation" ? "Quotation" : "Invoice"} saved successfully.`
+    );
+  };
+
+  const handleSearch = (event) => {
+    event.preventDefault();
+    const trimmedSearch = searchTerm.trim();
+
+    if (!trimmedSearch) {
+      setSelectedDoc(null);
+      setStatusMessage("Enter a quotation or invoice number to search.");
+      return;
+    }
+
+    const matchedDoc = findDocumentByReference(savedDocs, trimmedSearch, docType);
+
+    if (!matchedDoc) {
+      setSelectedDoc(null);
+      setStatusMessage(`No saved document found for ${trimmedSearch}.`);
+      return;
+    }
+
+    setSelectedDoc(matchedDoc);
+    setStatusMessage(
+      `${matchedDoc.type === "quotation" ? "Quotation" : "Invoice"} ${matchedDoc.referenceNo} found.`
     );
   };
 
@@ -151,7 +224,7 @@ function Admin() {
   };
 
   const resetForm = () => {
-    setRows(defaultRows);
+    setRows([createBlankRow(1)]);
     setFormData({
       referenceNo: getReferenceNumber(docType),
       customerName: "",
@@ -159,11 +232,64 @@ function Admin() {
       date: today,
       siteAddress: "",
       validFor: "15 days",
-      scopeOfWork:
-        "Interior wall painting, ceiling touch-up, and surface preparation for the specified area.",
+      scopeOfWork: "",
     });
     setStatusMessage("Form reset successfully.");
   };
+
+  const loadDocumentIntoForm = (doc) => {
+    if (!doc) return;
+
+    setDocType(doc.type);
+    setSelectedDoc(doc);
+    setSearchTerm(doc.referenceNo);
+
+    setFormData({
+      referenceNo: doc.referenceNo || "",
+      customerName: doc.customerName || "",
+      contactNo: doc.contactNo || "",
+      date: doc.date || new Date().toISOString().slice(0, 10),
+      siteAddress: doc.siteAddress || "",
+      validFor: doc.validFor || "15 days",
+      scopeOfWork: doc.scopeOfWork || "",
+    });
+
+    setRows(Array.isArray(doc.rows) && doc.rows.length ? doc.rows : defaultRows);
+
+    setStatusMessage(
+      `${doc.type === "quotation" ? "Quotation" : "Invoice"} ${doc.referenceNo} loaded.`
+    );
+  };
+
+  if (!isUnlocked) {
+    return (
+      <div className="admin-page admin-lock-page">
+        <div className="admin-lock-card">
+          <h1>Admin Login</h1>
+          <p className="admin-lock-subtitle">Enter the password to access the admin dashboard.</p>
+
+          <form onSubmit={handlePasswordSubmit} className="admin-lock-form">
+            <label>
+              <span>Password</span>
+              <input
+                type="password"
+                value={passwordInput}
+                onChange={(event) => setPasswordInput(event.target.value)}
+                placeholder="Enter password"
+                autoFocus
+              />
+            </label>
+
+            {passwordError && <p className="admin-lock-error">{passwordError}</p>}
+
+            <button type="submit" className="btn btn-primary admin-lock-button">
+              Unlock Admin
+            </button>
+          </form>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-page">
@@ -362,10 +488,10 @@ function Admin() {
           <div className="document-sheet">
             <header className="sheet-header">
               <div className="brand-box">
-                <div className="brand-mark">EP</div>
+                <div className="brand-mark">E</div>
                 <div>
-                  <h2>{companyProfile.name}</h2>
-                  <p>{companyProfile.tagline}</p>
+                  <h2><span className="brand-elite">Elite</span><span className="brand-paint">Paint</span></h2>
+                  <p>PAINTING STUDIO</p>
                 </div>
               </div>
 
@@ -469,7 +595,87 @@ function Admin() {
             </section>
           </div>
 
+          <div className="customer-requests-panel recent-docs">
+            <h3>Customer Quote Requests</h3>
+            {customerRequests.length === 0 ? (
+              <p>No customer requests received yet.</p>
+            ) : (
+              <ul className="customer-request-list">
+                {customerRequests.map((request) => (
+                  <li key={request.id} className="customer-request-item">
+                    <div className="customer-request-header">
+                      <strong>{request.name || "Customer"}</strong>
+                      <span>{new Date(request.createdAt).toLocaleDateString()}</span>
+                    </div>
+                    <p><strong>Phone:</strong> {request.phone || "-"}</p>
+                    <p><strong>Service:</strong> {request.service || "-"}</p>
+                    <p><strong>Message:</strong> {request.message || "-"}</p>
+                    <button
+                      type="button"
+                      className="btn btn-light customer-request-delete"
+                      onClick={() => {
+                        const updatedRequests = deleteCustomerRequestById(customerRequests, request.id);
+                        saveCustomerRequests(updatedRequests);
+                        setCustomerRequests(updatedRequests);
+                        setStatusMessage(`${request.name || "Customer"}'s request deleted.`);
+                      }}
+                    >
+                      Delete
+                    </button>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
+
           <div className="recent-docs">
+            <div className="document-search">
+              <h3>Search saved document</h3>
+              <form onSubmit={handleSearch} className="document-search-form">
+                <input
+                  type="text"
+                  value={searchTerm}
+                  onChange={(event) => setSearchTerm(event.target.value)}
+                  placeholder={docType === "quotation" ? "Enter quotation no." : "Enter invoice no."}
+                />
+                <button type="submit" className="btn btn-primary">
+                  Search
+                </button>
+              </form>
+
+              {selectedDoc ? (
+                <div className="search-result">
+                  <div className="search-result-header">
+                    <span>{selectedDoc.type === "quotation" ? "Quotation" : "Invoice"}</span>
+                    <strong>{selectedDoc.referenceNo}</strong>
+                  </div>
+                  <p>
+                    <strong>Customer:</strong> {selectedDoc.customerName || "Customer"}
+                  </p>
+                  <p>
+                    <strong>Date:</strong> {selectedDoc.date || "-"}
+                  </p>
+                  <p>
+                    <strong>Total:</strong> {formatCurrency(selectedDoc.total || 0)}
+                  </p>
+                  <button
+                    type="button"
+                    className="btn btn-light"
+                    onClick={() => {
+                      setSearchTerm(selectedDoc.referenceNo);
+                      setStatusMessage(
+                        `${selectedDoc.type === "quotation" ? "Quotation" : "Invoice"} ${selectedDoc.referenceNo} is ready to view.`
+                      );
+                    }}
+                  >
+                    View record
+                  </button>
+                </div>
+              ) : (
+                <p className="search-empty">No document selected yet.</p>
+              )}
+            </div>
+
             <h3>Recent saved records</h3>
             {savedDocs.length === 0 ? (
               <p>No saved quotations or invoices yet.</p>
@@ -477,9 +683,41 @@ function Admin() {
               <ul>
                 {savedDocs.map((doc) => (
                   <li key={doc.id}>
-                    <span>{doc.type === "quotation" ? "Quotation" : "Invoice"}</span>
-                    <strong>{doc.referenceNo}</strong>
-                    <small>{doc.customerName || "Customer"}</small>
+                    <button
+                      type="button"
+                      className="saved-doc-link"
+                      onClick={() => {
+                        setSelectedDoc(doc);
+                        setSearchTerm(doc.referenceNo);
+                        setStatusMessage(
+                          `${doc.type === "quotation" ? "Quotation" : "Invoice"} ${doc.referenceNo} opened.`
+                        );
+                      }}
+                    >
+                      <span>{doc.type === "quotation" ? "Quotation" : "Invoice"}</span>
+                      <strong>{doc.referenceNo}</strong>
+                      <small>{doc.customerName || "Customer"}</small>
+                    </button>
+
+                    <button
+                      type="button"
+                      className="btn btn-light"
+                      onClick={() => {
+                        const updatedDocs = deleteDocumentById(savedDocs, doc.id);
+                        saveDocuments(updatedDocs, doc.type);
+                        setSavedDocs(updatedDocs);
+
+                        if (selectedDoc?.id === doc.id) {
+                          setSelectedDoc(null);
+                        }
+
+                        setStatusMessage(
+                          `${doc.type === "quotation" ? "Quotation" : "Invoice"} ${doc.referenceNo} deleted.`
+                        );
+                      }}
+                    >
+                      Delete
+                    </button>
                   </li>
                 ))}
               </ul>

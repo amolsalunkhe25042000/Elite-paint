@@ -90,6 +90,24 @@
   width: 22px;
 }
 .menu-backdrop { display: none; }
+@media (max-width: 1024px) {
+  .nav {
+    gap: 18px;
+  }
+  .header-container {
+    padding: 0 16px;
+  }
+}
+
+@media (max-width: 860px) {
+  .nav {
+    gap: 10px;
+  }
+  .nav a {
+    font-size: 0.82rem;
+  }
+}
+
 @media (max-width: 760px) {
   .menu-is-open { overflow: hidden; }
   .header-container { min-height: 68px; }
