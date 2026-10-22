@@ -54,12 +54,16 @@ main {
   position: absolute;
   width: 52px;
 }
-.loader-ring span {
+.loader-ring[aria-hidden="true"]::before {
   color: #193738;
+  content: "B";
   font:
     700 1.5rem "Playfair Display",
     serif;
-  position: relative;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
   z-index: 1;
 }
 .loader-content p {
@@ -77,9 +81,18 @@ main {
   font-size: 0.67rem;
   letter-spacing: 0.06em;
 }
+.loading-dots {
+  animation: loading-dots-pulse 1s steps(2, end) infinite;
+}
 
 @keyframes loader-spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-dots-pulse {
+  50% {
+    opacity: 0;
   }
 }
