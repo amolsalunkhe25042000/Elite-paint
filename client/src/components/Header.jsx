@@ -49,7 +49,7 @@ export default function Header() {
               {label}
             </NavLink>
           ))}
-          <a className="nav-call" href="tel:9356535803" onClick={() => setOpen(false)}>
+          <a className="nav-call" href="tel:9145474012" onClick={() => setOpen(false)}>
             Call us <b>→</b>
           </a>
         </nav>

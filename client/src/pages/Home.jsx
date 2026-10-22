@@ -35,7 +35,7 @@ export default function Home() {
                 Start your colour story <b>→</b>
               </Link>
               <a
-                href="https://wa.me/919356535803"
+                href="https://wa.me/919145474012"
                 target="_blank"
                 rel="noreferrer"
                 className="text-link"

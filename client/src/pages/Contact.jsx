@@ -15,7 +15,7 @@ export default function Contact() {
       `Hello Balaji Home Paint!%0A%0AName: ${data.name}%0APhone: ${data.phone}%0AService: ${data.service}%0AProject details: ${data.message}`,
     );
     window.open(
-      `https://wa.me/919356535803?text=${text}`,
+      `https://wa.me/919145474012?text=${text}`,
       "_blank",
       "noopener",
     );
@@ -47,12 +47,12 @@ export default function Contact() {
             </p>
             <div className="contact-method">
               <span>Phone</span>
-              <a href="tel:9356535803">+91 9145474012</a>
+              <a href="tel:9145474012">+91 9145474012</a>
             </div>
             <div className="contact-method">
               <span>WhatsApp</span>
               <a
-                href="https://wa.me/919356535803"
+                href="https://wa.me/919145474012"
                 target="_blank"
                 rel="noreferrer"
               >

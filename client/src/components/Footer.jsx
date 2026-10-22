@@ -23,9 +23,9 @@ export default function Footer() {
           </div>
           <div>
             <h4>Get in touch</h4>
-            <a href="tel:9356535803">+91 9145474012</a>
+            <a href="tel:9145474012">+91 9145474012</a>
             <a
-              href="https://wa.me/919356535803"
+              href="https://wa.me/919145474012"
               target="_blank"
               rel="noreferrer"
             >
