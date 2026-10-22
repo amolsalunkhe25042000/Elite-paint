@@ -42,13 +42,11 @@ function PageLoader() {
       aria-label="Loading page"
     >
       <div className="loader-content">
-        <div className="loader-ring">
-          <span>B</span>
-        </div>
-        <p>
-          BALAJI <b>HOME PAINT</b>
-        </p>
-        <small>Preparing your space</small>
+        <div className="loader-ring" aria-hidden="true" />
+        <p>BALAJI <b>HOME PAINT</b></p>
+        <small>
+          Preparing your space<span className="loading-dots">...</span>
+        </small>
       </div>
     </div>
   );

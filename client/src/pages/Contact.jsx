@@ -8,16 +8,17 @@ export default function Contact() {
     message: "",
   });
   const [sent, setSent] = useState(false);
-  const change = (e) => setData({ ...data, [e.target.name]: e.target.value });
-  const submit = (e) => {
-    e.preventDefault();
+  const change = (event) =>
+    setData({ ...data, [event.target.name]: event.target.value });
+  const submit = (event) => {
+    event.preventDefault();
     const text = encodeURIComponent(
-      `Hello Balaji Home Paint!%0A%0AName: ${data.name}%0APhone: ${data.phone}%0AService: ${data.service}%0AProject details: ${data.message}`,
+      `Hello Balaji Home Paint!\n\nName: ${data.name}\nPhone: ${data.phone}\nService: ${data.service}\nProject details: ${data.message}`,
     );
     window.open(
       `https://wa.me/919145474012?text=${text}`,
       "_blank",
-      "noopener",
+      "noopener,noreferrer",
     );
     setSent(true);
   };
@@ -72,7 +73,7 @@ export default function Contact() {
             <p className="eyebrow">Request your free quote</p>
             <h2>Let's get started.</h2>
             {sent && (
-              <div className="form-success">
+              <div className="form-success" role="status">
                 Thanks, {data.name.split(" ")[0] || "there"}! WhatsApp has
                 opened with your request.
               </div>
@@ -108,6 +109,7 @@ export default function Contact() {
                   <option>Waterproofing</option>
                   <option>Repainting & renovation</option>
                   <option>Commercial painting</option>
+                  <option>Other</option>
                 </select>
               </label>
               <label>

@@ -1,0 +1,336 @@
+/* ===== BRAND COMPARISON PAGE ===== */
+.brand-comparison {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 40px 20px;
+  background: linear-gradient(135deg, #f5f9f8 0%, #f9fbfa 100%);
+}
+
+.comparison-header {
+  text-align: center;
+  margin-bottom: 60px;
+}
+
+.comparison-header h1 {
+  font-size: 2.5rem;
+  color: #193738;
+  margin-bottom: 12px;
+  font-weight: 700;
+}
+
+.comparison-header p {
+  font-size: 1.1rem;
+  color: #6b8a88;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* ===== BRAND CARDS ===== */
+.brand-cards {
+  margin-bottom: 80px;
+}
+
+.brands-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+
+.brand-card {
+  background: #fff;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.brand-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.brand-header {
+  height: 120px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+}
+
+.brand-logo {
+  font-size: 2.5rem;
+  font-weight: 700;
+  opacity: 0.8;
+}
+
+.brand-content {
+  padding: 24px;
+}
+
+.brand-content h3 {
+  font-size: 1.3rem;
+  color: #193738;
+  margin-bottom: 16px;
+  font-weight: 700;
+}
+
+.brand-meta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 24px;
+  border-bottom: 1px solid #e8f0e6;
+}
+
+.meta-item {
+  display: grid;
+  gap: 4px;
+}
+
+.meta-label {
+  font-size: 0.75rem;
+  color: #8b9c9a;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.meta-value {
+  font-size: 0.95rem;
+  color: #193738;
+  font-weight: 700;
+}
+
+.features-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 8px;
+}
+
+.features-list li {
+  font-size: 0.9rem;
+  color: #405654;
+  line-height: 1.5;
+}
+
+/* ===== SYSTEM FEATURES TABLE ===== */
+.system-features {
+  background: #fff;
+  border-radius: 12px;
+  padding: 40px;
+  margin-bottom: 60px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+.system-features h2 {
+  font-size: 1.8rem;
+  color: #193738;
+  margin-bottom: 28px;
+  font-weight: 700;
+}
+
+.features-table {
+  overflow-x: auto;
+}
+
+.features-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.features-table thead {
+  background: #f5f9f8;
+}
+
+.features-table th {
+  padding: 16px 12px;
+  text-align: left;
+  font-weight: 700;
+  color: #193738;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid #d7e0da;
+}
+
+.features-table td {
+  padding: 14px 12px;
+  border-bottom: 1px solid #e8f0e6;
+  color: #405654;
+}
+
+.features-table tbody tr:hover {
+  background: #f9fbfa;
+}
+
+.feature-name {
+  font-weight: 600;
+  color: #193738;
+  min-width: 180px;
+}
+
+.features-table td:not(.feature-name) {
+  text-align: center;
+  font-weight: 600;
+}
+
+/* ===== ADVANTAGES ===== */
+.advantages {
+  margin-bottom: 60px;
+}
+
+.advantages h2 {
+  font-size: 1.8rem;
+  color: #193738;
+  margin-bottom: 32px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.advantages-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 28px;
+}
+
+.advantage {
+  background: #fff;
+  padding: 28px;
+  border-radius: 12px;
+  border-left: 4px solid #df7048;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+}
+
+.advantage:hover {
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.advantage h4 {
+  font-size: 1.1rem;
+  color: #193738;
+  margin-bottom: 8px;
+  font-weight: 700;
+}
+
+.advantage p {
+  color: #6b8a88;
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+/* ===== GETTING STARTED ===== */
+.getting-started {
+  background: linear-gradient(135deg, #193738 0%, #2a5657 100%);
+  border-radius: 12px;
+  padding: 40px;
+  color: #fff;
+}
+
+.getting-started h2 {
+  font-size: 1.8rem;
+  color: #fff;
+  margin-bottom: 32px;
+  font-weight: 700;
+  text-align: center;
+}
+
+.steps {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 24px;
+}
+
+.step {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.step-number {
+  min-width: 48px;
+  height: 48px;
+  background: #df7048;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.step h4 {
+  font-size: 1rem;
+  color: #fff;
+  margin-bottom: 6px;
+  font-weight: 700;
+}
+
+.step p {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.85);
+  line-height: 1.5;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 1000px) {
+  .brands-grid {
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  }
+
+  .comparison-header h1 {
+    font-size: 1.8rem;
+  }
+
+  .system-features {
+    padding: 24px;
+  }
+
+  .system-features h2 {
+    font-size: 1.4rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .brand-comparison {
+    padding: 24px 16px;
+  }
+
+  .comparison-header h1 {
+    font-size: 1.4rem;
+  }
+
+  .brands-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .advantages-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .steps {
+    grid-template-columns: 1fr;
+  }
+
+  .system-features {
+    padding: 16px;
+    overflow-x: auto;
+  }
+
+  .feature-name {
+    min-width: 140px;
+  }
+
+  .getting-started {
+    padding: 24px 16px;
+  }
+
+  .getting-started h2 {
+    font-size: 1.3rem;
+  }
+}
