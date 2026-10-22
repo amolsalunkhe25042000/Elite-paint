@@ -52,7 +52,7 @@ export default function About() {
               Your space deserves more than a quick coat.
             </h2>
             <p className="section-copy">
-              Elite Paint brings skilled craftsmanship and a considered eye to
+              Balaji Home Paint brings skilled craftsmanship and a considered eye to
               every project. From first colour conversation to the final
               clean-up, we make the process simple, precise, and genuinely
               enjoyable.
@@ -135,7 +135,7 @@ export default function About() {
             We don't simply paint walls. We help create the feeling you want to
             come home to.
           </blockquote>
-          <p>AMOL SALUNKHE &middot; FOUNDER, ELITE PAINT</p>
+          <p>AMOL SALUNKHE &middot; FOUNDER, BALAJI HOME PAINT</p>
         </div>
       </section>
     </main>

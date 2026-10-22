@@ -29,10 +29,10 @@ export default function Header() {
     <header className={`header ${open ? "menu-open" : ""}`}>
       <div className="header-container">
         <Link className="brand" to="/" onClick={() => setOpen(false)}>
-          <span className="brand-mark">E</span>
+          <span className="brand-mark">B</span>
           <span>
-            Elite<span>Paint</span>
-            <small>PAINTING STUDIO</small>
+            Balaji<span> Home Paint</span>
+            <small>PAINTING SERVICES</small>
           </span>
         </Link>
         <button

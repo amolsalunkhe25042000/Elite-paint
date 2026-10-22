@@ -43,10 +43,10 @@ function PageLoader() {
     >
       <div className="loader-content">
         <div className="loader-ring">
-          <span>E</span>
+          <span>B</span>
         </div>
         <p>
-          ELITE <b>PAINT</b>
+          BALAJI <b>HOME PAINT</b>
         </p>
         <small>Preparing your space</small>
       </div>

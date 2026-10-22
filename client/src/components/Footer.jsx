@@ -7,7 +7,7 @@ export default function Footer() {
         <div className="footer-top">
           <div>
             <Link className="footer-brand" to="/">
-              Elite<span>Paint</span>
+              Balaji<span> Home Paint</span>
             </Link>
             <p>
               Thoughtful colour. Impeccable finish.
@@ -23,7 +23,7 @@ export default function Footer() {
           </div>
           <div>
             <h4>Get in touch</h4>
-            <a href="tel:9356535803">+91 93565 35803</a>
+            <a href="tel:9356535803">+91 9145474012</a>
             <a
               href="https://wa.me/919356535803"
               target="_blank"
@@ -40,7 +40,7 @@ export default function Footer() {
           </div>
         </div>
         <div className="footer-bottom">
-          © {new Date().getFullYear()} Elite Paint · Crafted with care
+          © {new Date().getFullYear()} Balaji Home Paint · Crafted with care
         </div>
       </div>
     </footer>

@@ -12,7 +12,7 @@ export default function Contact() {
   const submit = (e) => {
     e.preventDefault();
     const text = encodeURIComponent(
-      `Hello Elite Paint!%0A%0AName: ${data.name}%0APhone: ${data.phone}%0AService: ${data.service}%0AProject details: ${data.message}`,
+      `Hello Balaji Home Paint!%0A%0AName: ${data.name}%0APhone: ${data.phone}%0AService: ${data.service}%0AProject details: ${data.message}`,
     );
     window.open(
       `https://wa.me/919356535803?text=${text}`,
@@ -47,7 +47,7 @@ export default function Contact() {
             </p>
             <div className="contact-method">
               <span>Phone</span>
-              <a href="tel:9356535803">+91 93565 35803</a>
+              <a href="tel:9356535803">+91 9145474012</a>
             </div>
             <div className="contact-method">
               <span>WhatsApp</span>

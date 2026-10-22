@@ -74,7 +74,7 @@ export default function Home() {
       </section>
       <section className="intro-section">
         <div className="container intro-grid">
-          <p className="eyebrow">The Elite difference</p>
+          <p className="eyebrow">The Balaji difference</p>
           <div>
             <h2 className="section-heading">
               Painting is more than colour on a wall.
