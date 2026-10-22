@@ -85,6 +85,12 @@
     serif;
   margin: 9px 0 26px;
 }
+@media (max-width: 900px) {
+  .service-list-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
 @media (max-width: 800px) {
   .services-list {
     padding: 75px 0;

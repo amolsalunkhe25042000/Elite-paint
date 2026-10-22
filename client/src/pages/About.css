@@ -145,6 +145,17 @@
   font-weight: 700;
   letter-spacing: 0.13em;
 }
+@media (max-width: 980px) {
+  .story-grid {
+    grid-template-columns: 1fr;
+    gap: 62px;
+  }
+  .local-spaces-grid,
+  .values-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
 @media (max-width: 760px) {
   .about-story,
   .about-values {

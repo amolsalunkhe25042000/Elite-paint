@@ -16,6 +16,12 @@ body {
   margin: 0;
   min-width: 320px;
   background: #fffdf9;
+  overflow-x: hidden;
+}
+img,
+svg {
+  display: block;
+  max-width: 100%;
 }
 a {
   color: inherit;
@@ -29,6 +35,11 @@ select {
 }
 button {
   cursor: pointer;
+}
+input,
+textarea,
+select {
+  font-size: 16px;
 }
 .container {
   width: min(1160px, calc(100% - 40px));
@@ -121,6 +132,12 @@ button {
   font-size: 1.1rem;
   margin: 0;
 }
+@media (max-width: 1024px) {
+  .container {
+    width: min(100% - 32px, 1160px);
+  }
+}
+
 @media (max-width: 600px) {
   .container {
     width: min(100% - 28px, 1160px);

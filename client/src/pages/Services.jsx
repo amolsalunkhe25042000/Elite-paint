@@ -4,32 +4,32 @@ const services = [
   [
     "Interior painting",
     "Fresh, refined interiors that work beautifully with your natural light and furniture.",
-    "https://digipaces.com/storage/Osian-Almanova-Internal-Living-Room.jpg",
+    "/images/service-interior.jpg",
   ],
   [
     "Exterior painting",
     "Protective, weather-ready colour that gives your home instant kerb appeal.",
-    "https://www.drishtiarchitects.com/wp-content/uploads/2020/11/6065-Bungalow_View015-min-758x520.jpg",
+    "/images/service-exterior.jpg",
   ],
   [
     "Textures & effects",
     "Subtle layers, feature walls and designer finishes with real depth.",
-    "https://assets.architecturaldigest.in/photos/6008438733ca0d53ee20781a/master/w_1600%2Cc_limit/Pune-home-interior-design-2-2.jpg",
+    "/images/service-texture.jpg",
   ],
   [
     "Waterproofing",
     "Smart moisture protection that keeps paintwork looking beautiful for longer.",
-    "https://images.homify.com/v1457602607/p/photo/image/1392328/Raj_Bhansali_resi_03.jpg",
+    "/images/service-waterproofing.jpg",
   ],
   [
     "Repainting & renovation",
     "A careful reset for well-loved homes, handled from preparation to polish.",
-    "https://www.buildofy.com/blog/content/images/2025/10/DSCF7176-HDR.jpg",
+    "/images/service-renovation.jpg",
   ],
   [
     "Commercial spaces",
     "Professional, low-disruption painting for offices, studios and retail spaces.",
-    "https://taoarchitecture.com/img/corporate/pbap-credai-office/pbap-credai-office-bg.jpg",
+    "/images/service-commercial.jpg",
   ],
 ];
 export default function Services() {
@@ -63,15 +63,15 @@ export default function Services() {
             </p>
           </div>
           <div className="service-list-grid">
-            {services.map((s, i) => (
-              <article className="service-full-card" key={s[0]}>
+            {services.map(([title, copy, image], index) => (
+              <article className="service-full-card" key={title}>
                 <div className="service-photo">
-                  <img src={s[2]} alt={s[0]} />
-                  <span>0{i + 1}</span>
+                  <img src={image} alt={title} />
+                  <span>0{index + 1}</span>
                 </div>
                 <div>
-                  <h3>{s[0]}</h3>
-                  <p>{s[1]}</p>
+                  <h3>{title}</h3>
+                  <p>{copy}</p>
                   <Link to="/contact">
                     Ask for a quote <b>→</b>
                   </Link>

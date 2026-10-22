@@ -108,6 +108,9 @@
   position: fixed;
   z-index: 50;
 }
+body.modal-is-open {
+  overflow: hidden;
+}
 .project-modal > div {
   background: #fffdf9;
   max-width: 710px;
@@ -149,6 +152,15 @@
   width: 34px;
   z-index: 1;
 }
+@media (max-width: 900px) {
+  .gallery-grid-new {
+    grid-template-columns: 1fr 1fr;
+  }
+  .project-0 {
+    grid-column: span 2;
+  }
+}
+
 @media (max-width: 700px) {
   .gallery-wrap {
     padding: 75px 0;

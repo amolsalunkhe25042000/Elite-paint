@@ -36,6 +36,7 @@ export default function Footer() {
           <div className="footer-note">
             <span>Mon – Sat</span>
             <strong>9:00 AM – 7:00 PM</strong>
+            <span>Pune, Maharashtra</span>
             <span>At your service, wherever colour calls.</span>
           </div>
         </div>
